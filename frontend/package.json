@@ -1,0 +1,42 @@
+{
+  "name": "react-tailwind-boilerplate",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@tailwindcss/postcss7-compat": "^2.0.2",
+    "postcss": "^7",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-hook-form": "^7.10.1",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^4.0.1",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
+  },
+  "devDependencies": {
+    "autoprefixer": "^9",
+    "postcss-cli": "^7.1.1"
+  },
+  "scripts": {
+    "start": "yarn watch:css && react-scripts start",
+    "build": "yarn build:css && react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "build:css": "postcss src/tailwind.css -o src/index.css",
+    "watch:css": "postcss src/tailwind.css -o src/index.css"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
