@@ -1,13 +1,16 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
+import { useHistory, useParams } from 'react-router-dom'
 
-const Register = () => {
+const ResetPassword = () => {
   //Create hook states for input fields
+  const history = useHistory()
   const { register, handleSubmit } = useForm()
-
+  const { token } = useParams()
   // Create ref for password input and confirmation input
   const passwordBox = useRef(null)
+  const confirmationBox = useRef(null)
   //Toggle function for hide/show password
   const passwordToggle = (e) => {
     e.preventDefault()
@@ -16,10 +19,25 @@ const Register = () => {
     else passwordBox.current.type = 'text'
   }
 
+  const confirmationToggle = (e) => {
+    e.preventDefault()
+    if (confirmationBox.current.type === 'text')
+      confirmationBox.current.type = 'password'
+    else confirmationBox.current.type = 'text'
+  }
+
+  useEffect(() => {
+    //Verify token with the server. If token is invalid, redirect to the main page
+    axios
+      .get(`http://localhost:5000/user/verifyToken/${token}`)
+      .then((res) => console.log(res))
+      .catch((err) => history.push('/'))
+  }, [])
+
   // Submit the form
   const submitHandler = async (user) => {
     console.log(user)
-    axios.post('http://localhost:3000/user/signUp', user)
+    axios.post(`http://localhost:5000/user/verifyToken/${token}`, user)
     // try {
     //   handleSubmit()
     // } catch (err) {
@@ -40,31 +58,9 @@ const Register = () => {
           onSubmit={handleSubmit(submitHandler)}
           className="shadow-2xl bg-white rounded-md px-10 md:px-16 flex flex-col text-lg font-normal"
         >
-          <h1 className="text-center py-8  font-semibold text-2xl">Register</h1>
-          <label htmlFor="username" className="text-lg font-normal">
-            NAME
-          </label>
-          <input
-            {...register('username')}
-            name="username"
-            type="text"
-            required
-            placeholder="Enter your name..."
-            className="mb-4 border border-gray-400 px-4 py-2 rounded-md"
-          />
-          {/* {errors.username && (
-            <p className="text-sm text-red-500">{errors.username}</p>
-          )} */}
-          <label htmlFor="email" className="text-lg font-normal">
-            E-MAIL
-          </label>
-          <input
-            {...register('email')}
-            type="text"
-            required
-            placeholder="Enter your email..."
-            className="mb-4 border border-gray-400 px-4 py-2 rounded-md"
-          />
+          <h1 className="text-center py-8  font-semibold text-2xl">
+            Reset Password
+          </h1>
           <div className="">
             <label htmlFor="password" className="text-lg font-normal">
               PASSWORD
@@ -91,8 +87,34 @@ const Register = () => {
                 <p className="text-sm text-red-500">{errors.password}</p>
               )} */}
           </div>
+          <div className="">
+            <label htmlFor="password" className="text-lg font-normal">
+              PASSWORD
+            </label>
+            <div className="flex relative">
+              <input
+                {...register('confirmation')}
+                ref={confirmationBox}
+                name="confirmation"
+                required
+                type="password"
+                placeholder="Enter your password again..."
+                className="mb-4 w-full border border-gray-400 px-4 py-2 rounded-md"
+              />
+              <button
+                tabIndex="-1"
+                className="absolute show-password-button focus:outline-none"
+                onClick={confirmationToggle}
+              >
+                <i className="far fa-eye"></i>
+              </button>
+            </div>
+            {/* {errors.password && (
+                <p className="text-sm text-red-500">{errors.password}</p>
+              )} */}
+          </div>
           <button className="my-10 bg-green-400 p-2 rounded-md text-gray-200 text-center">
-            Đăng ký
+            Reset My Password
           </button>
         </form>
       </main>
@@ -100,4 +122,4 @@ const Register = () => {
   )
 }
 
-export default Register
+export default ResetPassword
