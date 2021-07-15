@@ -1,7 +1,13 @@
 const bcrypt = require("bcrypt");
 const SALT_ROUNDS = 5;
+const jwt = require("jsonwebtoken");
 const { createToken, isAuthenticate, checkPassword } = require("../utils/auth");
-const { findUserByEmail, addUserDb } = require("../dbActions/userdbActions");
+const {
+  findUserByEmail,
+  addUserDb,
+  verifyEmail,
+  changePasswordByEmail,
+} = require("../dbActions/userdbActions");
 const {
   sendVerificationEmail,
   resetPasswordEmail,
@@ -62,4 +68,54 @@ const logIn = async (email, password) => {
   }
 };
 
-module.exports = { createAdmin, createUser, logIn };
+const resetPassword = async (password, token) => {
+  try {
+    const decode = jwt.verify(token, process.env.JWT_SECRET);
+    const hash = await bcrypt.hash(password, SALT_ROUNDS);
+    const { email } = decode;
+    password = hash;
+    const user = await changePasswordByEmail(email, password);
+    if (user === null) throw "Email not found";
+    return user;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+const forgotPassword = async (email) => {
+  try {
+    const user = await findUserByEmail(email);
+    if (user !== null) {
+      const token = jwt.sign({ email }, process.env.JWT_SECRET, {
+        expiresIn: "1h",
+      });
+      const url = `http://localhost:3000/reset/${token}`;
+      resetPasswordEmail(email, url);
+    } else throw "Email not found";
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+const verifyEmailLogic = async (token) => {
+  try {
+    const { _id } = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await verifyEmail(_id);
+    if (user === null) throw "Email not found";
+    return user;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+module.exports = {
+  createAdmin,
+  createUser,
+  logIn,
+  resetPassword,
+  verifyEmailLogic,
+  forgotPassword,
+};

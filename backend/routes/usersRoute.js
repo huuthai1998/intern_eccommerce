@@ -12,6 +12,9 @@ const {
   logIn,
   createAdmin,
   createUser,
+  resetPassword,
+  verifyEmailLogic,
+  forgotPassword,
 } = require("../businessLogic/userLogic");
 
 //Create a seller account
@@ -68,20 +71,24 @@ router.post("/signIn", async (req, res) => {
 });
 
 router.post("/forgotPassword/", async (req, res) => {
-  const email = req.body.email;
-  const token = jwt.sign({ email }, process.env.JWT_SECRET, {
-    expiresIn: "1h",
-  });
-  const url = `http://localhost:3000/reset/${token}`;
-  resetPasswordEmail(email, url);
-  res.status(200).send("Reset password email sent");
+  try {
+    const email = req.body.email;
+    const user = await forgotPassword(email);
+
+    res.status(200).send("Reset password email sent");
+  } catch (err) {
+    res.status(401).send(err);
+  }
 });
 
 router.get("/verifyEmail/:token", async (req, res) => {
-  const token = req.params.token;
-  const { _id } = jwt.verify(token, process.env.JWT_SECRET);
-  const user = await User.findOneAndUpdate({ _id }, { isVerified: true });
-  res.status(200).send("Thank you for verifying your email");
+  try {
+    const token = req.params.token;
+    const user = await verifyEmailLogic(token);
+    res.status(200).send("Thank you for verifying your email");
+  } catch (err) {
+    res.status(401).send(err);
+  }
 });
 
 router.get("/verifyToken/:token", async (req, res) => {
@@ -94,22 +101,13 @@ router.get("/verifyToken/:token", async (req, res) => {
 
 router.put("/resetPassword/:token", async (req, res) => {
   const token = req.params.token;
-  let password = req.body.password;
-  console.log(password);
-  jwt.verify(token, process.env.JWT_SECRET, (err, decode) => {
-    if (err) return res.status(401).send({ message: "Invalid Token" });
-    else {
-      bcrypt.hash(password, SALT_ROUNDS, async (error, hash) => {
-        const { email } = decode;
-        password = hash;
-        console.log(password);
-        console.log(email);
-        const user = await User.findOneAndUpdate({ email }, { password });
-        console.log(user);
-        res.status(201).send(user);
-      });
-    }
-  });
+  try {
+    const user = await resetPassword(req.body.password, token);
+    console.log(user);
+    res.status(201).send(user);
+  } catch (err) {
+    res.status(401).send(err);
+  }
 });
 
 module.exports = router;

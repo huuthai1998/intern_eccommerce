@@ -44,18 +44,25 @@ const Register = () => {
           <CloseButton onClick={closeHandler} />
           <div className="px-10 md:px-16 flex flex-col text-lg font-normal">
             <h1 className="text-center py-8  font-bold text-3xl">Register</h1>
-            {/* <label htmlFor="name" className="text-sm font-bold mb-2">
-              Name
-            </label>
-            <input
-              {...formHook.register('name')}
-              type="text"
-              required
-              placeholder="Enter your name..."
-              className="mb-4 border border-gray-400 px-5 py-3 bg-gray-100 text-base"
-            /> */}
-            <CredentialInputBox form={formHook} name="name" label="Name" />
-            <CredentialInputBox form={formHook} name="email" label="E-MAIL" />
+            <CredentialInputBox
+              form={formHook}
+              name="name"
+              label="Name"
+              validator={{
+                required: true,
+              }}
+              errorMessage="Name cannot be blank"
+            />
+            <CredentialInputBox
+              form={formHook}
+              name="email"
+              label="E-MAIL"
+              errorMessage="Invalid Email Format"
+              validator={{
+                pattern:
+                  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+              }}
+            />
             <CredentialInputBox
               form={formHook}
               name="password"

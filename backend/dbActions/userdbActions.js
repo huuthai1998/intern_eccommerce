@@ -13,4 +13,16 @@ const addUserDb = (user) => {
   return User.create(user);
 };
 
-module.exports = { findUserByEmail, addUserDb };
+const changePasswordByEmail = (email, password) => {
+  return User.findOneAndUpdate({ email }, { password });
+};
+
+const verifyEmail = (_id) => {
+  return User.findOneAndUpdate({ _id }, { isVerified: true });
+};
+module.exports = {
+  findUserByEmail,
+  addUserDb,
+  changePasswordByEmail,
+  verifyEmail,
+};
