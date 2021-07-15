@@ -1,0 +1,4 @@
+.close-button {
+  right: 0;
+  transform: translateX(-50%) translateY(50%);
+}

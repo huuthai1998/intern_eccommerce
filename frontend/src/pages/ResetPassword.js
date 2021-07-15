@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import { useHistory, useParams } from 'react-router-dom'
+import '../styles/ResetPassword.css'
 
 const ResetPassword = () => {
   //Create hook states for input fields
@@ -37,7 +38,12 @@ const ResetPassword = () => {
   // Submit the form
   const submitHandler = async (user) => {
     console.log(user)
-    axios.post(`http://localhost:5000/user/verifyToken/${token}`, user)
+    const { data } = await axios.put(
+      `http://localhost:5000/user/resetPassword/${token}`,
+      user
+    )
+    alert('You have successfully reset your password')
+    history.push('/login')
     // try {
     //   handleSubmit()
     // } catch (err) {
@@ -113,7 +119,7 @@ const ResetPassword = () => {
                 <p className="text-sm text-red-500">{errors.password}</p>
               )} */}
           </div>
-          <button className="my-10 bg-green-400 p-2 rounded-md text-gray-200 text-center">
+          <button className="my-10 bg-yellow-600  p-2 rounded-md text-gray-200 text-center">
             Reset My Password
           </button>
         </form>
