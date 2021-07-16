@@ -9,7 +9,7 @@ const CredentialInputBox = (props) => {
       passwordBox.current.type = 'password'
     else passwordBox.current.type = 'text'
   }
-  let { form, name, label, type, validator, errorMessage } = props
+  let { form, name, label, type, validator, errorMessage, err } = props
   const {
     register,
     formState: { errors },
@@ -28,7 +28,9 @@ const CredentialInputBox = (props) => {
           required
           placeholder={`Enter your ${name}...`}
           className={`mb-1 border px-5 py-3 bg-gray-100 text-base ${
-            errors[name] ? 'border-red-500 bg-red-200' : 'border-gray-400'
+            errors[name] || err
+              ? 'border-red-500 bg-red-200'
+              : 'border-gray-400'
           }`}
         />
         {errors[name] && <p className="text-sm text-red-500">{errorMessage}</p>}
@@ -49,7 +51,9 @@ const CredentialInputBox = (props) => {
             type="password"
             placeholder="Enter your password..."
             className={`mb-1 w-full border px-5 py-3 bg-gray-100 text-base ${
-              errors[name] ? 'border-red-500 bg-red-200' : 'border-gray-400'
+              errors[name] || err
+                ? 'border-red-500 bg-red-200'
+                : 'border-gray-400'
             }`}
           />
           <button

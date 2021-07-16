@@ -4,6 +4,7 @@ import axios from 'axios'
 import { useHistory, useParams } from 'react-router-dom'
 import '../styles/ResetPassword.css'
 import CredentialInputBox from 'component/CredentialInputBox'
+import CredentialButton from 'component/CredentialButton'
 
 const ResetPassword = () => {
   //Create hook states for input fields
@@ -68,9 +69,7 @@ const ResetPassword = () => {
             label="confirmation"
             type="password"
           />
-          <button className="my-10 bg-yellow-600  p-2 rounded-md text-gray-200 text-center">
-            Reset My Password
-          </button>
+          <CredentialButton name="Reset My Password" />
         </form>
       </main>
     </div>

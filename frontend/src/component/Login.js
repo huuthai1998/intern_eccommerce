@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import { Link, useHistory } from 'react-router-dom'
@@ -9,22 +9,13 @@ import CloseButton from './CloseButton/CloseButton'
 import CredentialInputBox from './CredentialInputBox'
 
 const Login = () => {
+  const [error, setError] = useState('')
   const history = useHistory()
   //Redux hooks
   const state = useSelector((i) => i)
   const dispatch = useDispatch()
   //Create hook states for input fields
   const formHook = useForm()
-
-  // Create ref for password input and confirmation input
-  const passwordBox = useRef(null)
-  //Toggle function for hide/show password
-  const passwordToggle = (e) => {
-    e.preventDefault()
-    if (passwordBox.current.type === 'text')
-      passwordBox.current.type = 'password'
-    else passwordBox.current.type = 'text'
-  }
 
   const closeHandler = (e) => {
     e.preventDefault()
@@ -45,7 +36,7 @@ const Login = () => {
       history.push('/')
     } catch (err) {
       console.log(err.response.data)
-      alert(err.response.data)
+      setError(err.response.data)
     }
 
     // try {
@@ -70,13 +61,24 @@ const Login = () => {
         >
           <CloseButton onClick={closeHandler} />
           <div className="px-10 md:px-16 flex flex-col text-lg font-normal">
-            <h1 className="text-center py-8  font-bold text-3xl">Log In</h1>
-            <CredentialInputBox form={formHook} name="email" label="E-MAIL" />
+            <h1 className="text-center pt-8 pb-1  font-bold text-3xl">
+              Log In
+            </h1>
+            {error && (
+              <p className="text-center text-sm pb-5 text-red-500">{error}</p>
+            )}
+            <CredentialInputBox
+              form={formHook}
+              name="email"
+              label="E-MAIL"
+              err={error}
+            />
             <CredentialInputBox
               form={formHook}
               name="password"
               label="password"
               type="password"
+              err={error !== '' ? error : undefined}
             />
             <div className="flex md:flex-row flex-col mb-5 justify-between">
               <label className="check-container cursor-pointer">

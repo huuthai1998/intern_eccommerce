@@ -13,8 +13,16 @@ const {
   resetPasswordEmail,
 } = require("../utils/mailingConfig");
 
+const validateEmail = (input) => {
+  const re =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(input).toLowerCase());
+};
+
 const createUser = async (user) => {
   try {
+    if (!validateEmail(user.email)) throw "Invalid Email format";
+
     let inputUser = await findUserByEmail(user.email);
     if (inputUser) throw "Email has already used";
     else {
