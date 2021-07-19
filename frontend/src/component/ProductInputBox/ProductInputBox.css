@@ -1,0 +1,14 @@
+.product-box-wrap {
+  grid-template-columns: 1fr 6fr;
+}
+
+.photos-grid {
+  grid-template-columns: repeat(4, 1fr);
+  grid-column-gap: 15px;
+}
+
+.add-photo-button {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

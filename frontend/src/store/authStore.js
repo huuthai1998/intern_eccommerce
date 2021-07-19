@@ -25,25 +25,25 @@ const authReducer = (state = initState, action) => {
       return {
         ...state,
         isLoading: false,
-        user: action.payload,
+        user: data,
         authenticated: true,
       }
     case REGISTER_FAIL:
-      return { ...state, isLoading: false, error: action.payload }
+      return { ...state, isLoading: false, error: data }
     case LOGIN_REQUEST:
       return { ...state, isLoading: true }
     case LOGIN_SUCCESS:
       return {
         ...state,
         isLoading: false,
-        user: action.payload,
+        user: data,
         authenticated: true,
       }
     case LOGIN_FAIL:
       var ret = {
         ...state,
         isLoading: false,
-        error: action.payload,
+        error: data,
       }
       return ret
     case LOGOUT_REQUEST:
@@ -56,7 +56,7 @@ const authReducer = (state = initState, action) => {
         authenticated: false,
       }
     case CHECK_AUTH_SUCCESS:
-      return { ...state, isLoading: false, authenticated: true }
+      return { ...state, isLoading: false, authenticated: true, user: data }
     case CHECK_AUTH_FAIL:
       return { ...state, isLoading: false, authenticated: false }
     default:

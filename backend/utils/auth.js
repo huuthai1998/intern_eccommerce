@@ -29,10 +29,16 @@ const isAuthenticate = (req, res, next) => {
 };
 
 const isAdmin = (req, res, next) => {
-  if ((req.body.user && req.body.user.isAdmin) || req.query.isAdmin) {
-    return next();
-  }
-  return res.status(401).send({ message: "This is not an admin" });
+  const authHeader = req.headers.authorization;
+  if (authHeader) {
+    const token = authHeader.slice(7);
+    jwt.verify(token, process.env.JWT_SECRET, (err, decode) => {
+      if (err) return res.status(401).send({ message: "Invalid Token" });
+      else if (!decode.isAdmin)
+        return res.status(401).send({ message: "This is not an admin" });
+      next();
+    });
+  } else return res.status(401).send({ message: "Couldn't find token" });
 };
 
-module.exports = { createToken, isAuthenticate, isAdmin, checkPassword };
+module.exports = { createToken, isAuthenticate, checkPassword, isAdmin };

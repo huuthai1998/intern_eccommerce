@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import { Link, useHistory } from 'react-router-dom'
@@ -12,7 +12,6 @@ const Login = () => {
   const [error, setError] = useState('')
   const history = useHistory()
   //Redux hooks
-  const state = useSelector((i) => i)
   const dispatch = useDispatch()
   //Create hook states for input fields
   const formHook = useForm()

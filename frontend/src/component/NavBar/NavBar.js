@@ -1,15 +1,56 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import logo from '../../assets/logo.svg'
 import './NavBar.css'
 import { useDispatch, useSelector } from 'react-redux'
 import UserDropdown from 'component/UserDropdown/UserDropdown'
 import Cookies from 'js-cookie'
+import axios from 'axios'
+import CategoryDropdown from 'component/CategoryDropdown/CategoryDropdown'
+
+const categoriesRender = (dropCategories, categories, hoverCategoryHandler) => {
+  return categories.map((i, index) => {
+    return (
+      <div
+        className="flex"
+        key={categories._id}
+        onMouseOver={hoverCategoryHandler(index)}
+      >
+        <span className=" cursor-pointer">
+          {i.name}
+          <i className="ml-2 fas fa-chevron-down"></i>
+        </span>
+        <CategoryDropdown
+          isDropCategory={dropCategories[index]}
+          categories={i.subCategories}
+        />
+      </div>
+    )
+  })
+}
 
 const NavBar = () => {
   const { authenticated } = useSelector((i) => i)
   const dispatch = useDispatch()
+  const [category, setCategory] = useState([])
   const [isDrop, setIsDrop] = useState(false)
+  const [dropCategories, setDropCategories] = useState([])
+  const hoverCategoryHandler = (idx) => (e) => {
+    setDropCategories(
+      dropCategories.map((u, i) => {
+        if (i === idx) return true
+        else return false
+      })
+    )
+  }
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await axios.get('http://localhost:5000/category/getAll')
+      setCategory(data)
+      setDropCategories(new Array(data.length).fill(false))
+    }
+    fetchData()
+  }, [])
 
   const onClickHandler = (e) => {
     e.preventDefault()
@@ -58,27 +99,8 @@ const NavBar = () => {
           </div>
         )}
       </section>
-      <section className="border-t border-b border-gray-200 py-4 flex space-x-8 justify-center">
-        <div className="flex">
-          <span className="">
-            Men<i className="ml-2 fas fa-chevron-down"></i>
-          </span>
-        </div>
-        <div className="flex">
-          <span className="">
-            Ladies<i className="ml-2 fas fa-chevron-down"></i>
-          </span>
-        </div>
-        <div className="flex">
-          <span className="">
-            Girls<i className="ml-2 fas fa-chevron-down"></i>
-          </span>
-        </div>
-        <div className="flex">
-          <span className="">
-            Boys<i className="ml-2 fas fa-chevron-down"></i>
-          </span>
-        </div>
+      <section className="relative border-t border-b border-gray-200 py-4 flex space-x-8 justify-center">
+        {categoriesRender(dropCategories, category, hoverCategoryHandler)}
       </section>
     </nav>
   )

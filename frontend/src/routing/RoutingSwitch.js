@@ -10,7 +10,7 @@ const RoutingSwitch = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     let user = Cookies.getJSON('authInfo')
-    if (user !== undefined) dispatch({ type: 'CHECK_AUTH_SUCCESS' })
+    if (user !== undefined) dispatch({ type: 'CHECK_AUTH_SUCCESS', data: user })
     else dispatch({ type: 'CHECK_AUTH_FAIL' })
   }, [])
   return (

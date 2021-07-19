@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const SALT_ROUNDS = 5;
 const jwt = require("jsonwebtoken");
-const { createToken, isAuthenticate, checkPassword } = require("../utils/auth");
+const { createToken } = require("../utils/auth");
 const {
   findUserByEmail,
   addUserDb,
@@ -61,13 +61,12 @@ const createAdmin = async () => {
 
 const logIn = async (email, password) => {
   try {
-    let user = await findUserByEmail(email);
-    if (user) {
-      const isEqual = await bcrypt.compare(password, user.password);
+    let { _doc } = await findUserByEmail(email);
+    if (_doc) {
+      const isEqual = await bcrypt.compare(password, _doc.password);
       if (isEqual) {
-        delete user.password;
-        user.token = createToken(user.toJSON());
-        return user;
+        delete _doc.password;
+        return { ..._doc, token: createToken(_doc) };
       } else throw "Password is incorrect";
     } else throw "Email not found";
   } catch (err) {

@@ -1,0 +1,11 @@
+.seller-login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+}
+
+.charcoal-gray {
+  background-color: rgba(61, 61, 63, 0.8);
+}
