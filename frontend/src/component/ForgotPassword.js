@@ -13,7 +13,10 @@ const ForgotPassword = () => {
   // Submit the form
   const submitHandler = async (email) => {
     try {
-      axios.post('http://localhost:5000/user/forgotPassword', email)
+      axios.post(
+        `${process.env.REACT_APP_BACKEND_LINK}/user/forgotPassword`,
+        email
+      )
       setIsSubmitted(true)
     } catch (err) {
       console.log(err)

@@ -25,14 +25,15 @@ const SellerLogin = () => {
       console.log(user)
       dispatch({ type: 'LOGIN_REQUEST' })
       const { data } = await axios.post(
-        'http://localhost:5000/user/signIn',
+        `${process.env.REACT_APP_BACKEND_LINK}/user/signIn`,
         user
       )
-      Cookies.set('authInfo', JSON.stringify(data))
+      Cookies.set('authInfo', JSON.stringify(data.token))
       dispatch({ type: 'LOGIN_SUCCESS', payload: data })
       console.log(data)
       history.push('/')
     } catch (err) {
+      dispatch({ type: 'LOGIN_FAIL' })
       console.log(err.response.data)
       setError(err.response.data)
     }

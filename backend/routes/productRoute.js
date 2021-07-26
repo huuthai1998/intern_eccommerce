@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const { isAdmin, isAuthenticate, checkPassword } = require("../utils/auth");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+const { isAdmin } = require("../utils/auth");
 
 const {
   addProductHandler,
-  getCategories,
+  getProducts,
+  deleteProductHandler,
+  getCategoryPaginationLogic,
+  getProductById,
 } = require("../businessLogic/productLogic");
 
 router.post("/createProduct", isAdmin, async function (req, res) {
@@ -20,9 +21,51 @@ router.post("/createProduct", isAdmin, async function (req, res) {
   }
 });
 
+router.get("/get/:id", async function (req, res) {
+  try {
+    const id = req.params.id;
+    const Product = await getProductById(id);
+    res.status(200).send(Product);
+  } catch (err) {
+    res.status(401).send({ msg: err.message });
+  }
+});
+
+router.post("/deleteProduct", isAdmin, async function (req, res) {
+  try {
+    const { _id } = req.body;
+    const Product = await deleteProductHandler(_id);
+    console.log(Product);
+    res.status(200).send(Product);
+  } catch (err) {
+    res.status(401).send({ msg: err.message });
+  }
+});
+
 router.get("/getAll", async function (req, res) {
   try {
-    const Product = await getCategories();
+    const Product = await getProducts();
+    res.status(200).send(Product);
+  } catch (err) {
+    res.status(401).send({ msg: err.message });
+  }
+});
+
+router.post("/getByCategory", async function (req, res) {
+  try {
+    let { skip, limit, category, size, available, brand, color } = req.body;
+    skip = skip ? skip : 0;
+    limit = limit ? limit : 2;
+    console.log(skip, limit, category, size, available);
+    const Product = await getCategoryPaginationLogic(
+      skip,
+      limit,
+      category,
+      size,
+      available,
+      brand,
+      color
+    );
     res.status(200).send(Product);
   } catch (err) {
     res.status(401).send({ msg: err.message });

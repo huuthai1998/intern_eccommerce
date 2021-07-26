@@ -6,7 +6,7 @@ const categorySchema = new mongoose.Schema({
     unique: true,
     required: true,
   },
-  subCategories: [String],
+  parent: this,
 });
 
 module.exports = {

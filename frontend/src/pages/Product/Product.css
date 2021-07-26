@@ -1,0 +1,7 @@
+.info-section {
+  height: 450px;
+}
+
+.thumbnail-grid {
+  grid-template-rows: repeat(4, 1fr);
+}

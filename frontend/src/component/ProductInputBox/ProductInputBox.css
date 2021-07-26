@@ -1,5 +1,5 @@
 .product-box-wrap {
-  grid-template-columns: 1fr 6fr;
+  grid-template-columns: 1.1fr 6fr;
 }
 
 .photos-grid {

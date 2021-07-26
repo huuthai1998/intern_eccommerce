@@ -1,32 +1,39 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import { useForm } from 'react-hook-form'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import CredentialButton from './CredentialButton'
 import CloseButton from './CloseButton/CloseButton'
 import CredentialInputBox from './CredentialInputBox'
+import { useDispatch } from 'react-redux'
+import Cookies from 'js-cookie'
 
 const Register = () => {
   //Create hook states for input fields
   const formHook = useForm()
-
+  const dispatch = useDispatch()
+  const history = useHistory()
   const closeHandler = (e) => {
     e.preventDefault()
     alert('Closed')
   }
   // Submit the form
   const submitHandler = async (user) => {
-    console.log(user)
-    // const { data } = await axios.post('http://localhost:5000/user/signUp', user)
-    // console.log(data)
-    // alert(data)
-
-    // try {
-    //   handleSubmit()
-    // } catch (err) {
-    //   console.log(err)
-    // } finally {
-    // }
+    try {
+      console.log(user)
+      dispatch({ type: 'REGISTER_REQUEST' })
+      const { data } = await axios.post(
+        `${process.env.REACT_APP_BACKEND_LINK}/user/signUp`,
+        user
+      )
+      Cookies.set('authInfo', JSON.stringify(data.token))
+      dispatch({ type: 'REGISTER_SUCCESS', payload: data })
+      console.log(data)
+      history.push('/')
+    } catch (err) {
+      dispatch({ type: 'REGISTER_FAIL' })
+      console.log(err.response.data)
+    }
   }
 
   //   // Catch event button enter is pressed to submit

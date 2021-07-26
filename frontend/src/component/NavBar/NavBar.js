@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import logo from '../../assets/logo.svg'
 import './NavBar.css'
@@ -7,25 +7,37 @@ import UserDropdown from 'component/UserDropdown/UserDropdown'
 import Cookies from 'js-cookie'
 import axios from 'axios'
 import CategoryDropdown from 'component/CategoryDropdown/CategoryDropdown'
+import { Input } from 'semantic-ui-react'
 
-const categoriesRender = (dropCategories, categories, hoverCategoryHandler) => {
+const categoriesRender = (
+  dropCategories,
+  categories,
+  hoverCategoryHandler,
+  mouseLeaveCategoryHandler
+) => {
   return categories.map((i, index) => {
-    return (
-      <div
-        className="flex"
-        key={categories._id}
-        onMouseOver={hoverCategoryHandler(index)}
-      >
-        <span className=" cursor-pointer">
-          {i.name}
-          <i className="ml-2 fas fa-chevron-down"></i>
-        </span>
-        <CategoryDropdown
-          isDropCategory={dropCategories[index]}
-          categories={i.subCategories}
-        />
-      </div>
-    )
+    if (i.parent === null) {
+      const subCategories = categories.filter(
+        (e) => e.parent && e.parent.name === i.name
+      )
+      return (
+        <div
+          className="flex"
+          key={i._id}
+          onMouseOver={hoverCategoryHandler(index)}
+        >
+          <span className=" cursor-pointer">
+            {i.name}
+            <i className="ml-2 fas fa-chevron-down"></i>
+          </span>
+          <CategoryDropdown
+            isDropCategory={dropCategories[index]}
+            categories={subCategories}
+            mouseLeaveCategoryHandler={mouseLeaveCategoryHandler}
+          />
+        </div>
+      )
+    } else return <div className="div" hidden key={i._id}></div>
   })
 }
 
@@ -43,13 +55,24 @@ const NavBar = () => {
       })
     )
   }
+
+  const mouseLeaveCategoryHandler = (e) => {
+    setDropCategories(
+      dropCategories.map((u) => {
+        return false
+      })
+    )
+  }
+  const fetchData = async () => {
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_BACKEND_LINK}/category/getAll`
+    )
+    setCategory(data)
+    setDropCategories(new Array(data.length).fill(false))
+  }
   useEffect(() => {
-    const fetchData = async () => {
-      const { data } = await axios.get('http://localhost:5000/category/getAll')
-      setCategory(data)
-      setDropCategories(new Array(data.length).fill(false))
-    }
     fetchData()
+    return () => {}
   }, [])
 
   const onClickHandler = (e) => {
@@ -71,20 +94,30 @@ const NavBar = () => {
 
   return (
     <nav className="">
-      <section className="w-screen grid grid-nav py-6">
+      <section className="w-screen grid grid-nav py-6 border-b border-gray-400">
         <div className="flex justify-center">
-          <div className="">Search Bar</div>
+          <Input
+            icon="search"
+            iconPosition="right"
+            placeholder="Search"
+            className="border-black border rounded-lg"
+          />
         </div>
-        <div className="flex justify-center">
+        <Link to="/" className="flex justify-center">
           <img src={logo} alt="aware logo" className="" />
-        </div>
+        </Link>
         {!authenticated ? (
           <div className="flex justify-center">
             <div className="space-x-4">
-              <button className="text-base">Register</button>
-              <button className="text-base font-bold text-red-400 rounded-full px-8 py-1 border border-red-400">
+              <Link to="/register" className="text-base">
+                Register
+              </Link>
+              <Link
+                to="/login"
+                className="text-base font-bold text-red-400 rounded-full px-8 py-1 border border-red-400"
+              >
                 Log In
-              </button>
+              </Link>
             </div>
           </div>
         ) : (
@@ -99,8 +132,13 @@ const NavBar = () => {
           </div>
         )}
       </section>
-      <section className="relative border-t border-b border-gray-200 py-4 flex space-x-8 justify-center">
-        {categoriesRender(dropCategories, category, hoverCategoryHandler)}
+      <section className="relative border-b border-gray-400 py-4 flex space-x-8 justify-center">
+        {categoriesRender(
+          dropCategories,
+          category,
+          hoverCategoryHandler,
+          mouseLeaveCategoryHandler
+        )}
       </section>
     </nav>
   )

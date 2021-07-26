@@ -1,24 +1,34 @@
 const { categoryModel: Category } = require("../models/category");
 
-const findCategoryDb = (name) => {
-  return Category.findOne({ name });
+const findCategoryDb = (_id) => {
+  return Category.findOne({ _id: _id });
 };
 
-const addCategoryDb = (name, subCategories) => {
-  return Category.create({ name, subCategories });
-};
-
-const addSubCategoryDb = (subCategories, parent) => {
-  return Category.findOneAndUpdate({ name: parent }, { subCategories });
+const addCategoryDb = (name, parent) => {
+  return Category.create({ name, parent });
 };
 
 const getAllCategoriesDb = (name) => {
   return Category.find({});
 };
 
+const getParentsCategoriesDb = (name) => {
+  return Category.find({ parent: null });
+};
+
+const getSubCategoriesDb = (name) => {
+  return Category.find({ parent: { $ne: null } });
+};
+
+const deleteCategoryDb = (_id) => {
+  return Category.deleteOne({ _id: _id });
+};
+
 module.exports = {
-  addSubCategoryDb,
   addCategoryDb,
   findCategoryDb,
   getAllCategoriesDb,
+  deleteCategoryDb,
+  getParentsCategoriesDb,
+  getSubCategoriesDb,
 };

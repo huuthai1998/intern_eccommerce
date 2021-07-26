@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import './ProductInputBox.css'
-import { Button, Dropdown } from 'semantic-ui-react'
+import { Button, Dropdown, Input, TextArea } from 'semantic-ui-react'
 import { logIn } from 'actions/authActions'
 import CloseButton from 'component/CloseButton/CloseButton'
 
@@ -54,20 +54,20 @@ const ProductInputBox = (props) => {
     setImageSrc(tempSrc)
   }
 
-  const inputFileHandler = (ref) => (e) => {
+  const InputFileHandler = (ref) => (e) => {
     e.preventDefault()
     ref.current.click()
   }
 
   const photoCard = (ref, idx) => {
     return (
-      <div className="bg-gray-100 h-72 relative">
+      <div className="bg-gray-100 h-64 relative">
         {imageSrc[idx] !== undefined ? (
           <div className="flex justify-center relative">
             <img
               src={imageSrc[idx]}
               alt="previewUpload"
-              className="h-72 w-full"
+              className="h-64 w-full"
             />
             <CloseButton onClick={removeImage(idx)} />
           </div>
@@ -76,7 +76,7 @@ const ProductInputBox = (props) => {
             <Button
               variant="contained"
               component="label"
-              onClick={inputFileHandler(ref)}
+              onClick={InputFileHandler(ref)}
             >
               <div className="font-sm mx-auto flex justify-center text-center rounded-full w-6 h-6 text-xl font-bold text-white bg-gray-400">
                 <h2 className="">+</h2>
@@ -97,7 +97,7 @@ const ProductInputBox = (props) => {
 
   const photosHandler = () => {
     return (
-      <div className="space-x-4 mt-3 grid product-box-wrap text-right items-center">
+      <div className="space-x-4 mt-2 grid product-box-wrap text-right items-center">
         <label htmlFor={name} className="uppercase text-sm font-bold mb-2">
           {label}
         </label>
@@ -116,13 +116,20 @@ const ProductInputBox = (props) => {
     let opt = []
     options.forEach((item) => {
       var result = {}
-      result['key'] = item.toLowerCase()
-      result['text'] = item
-      result['value'] = item.toLowerCase()
+      if (typeof item !== 'object') {
+        result['key'] = item.toLowerCase()
+        result['text'] = item
+        result['value'] = item.toLowerCase()
+      } else {
+        console.log(item)
+        result['key'] = item.name.toLowerCase()
+        result['text'] = item.name
+        result['value'] = item._id
+      }
       opt.push(result)
     })
     return (
-      <div className="pr-4 pl-1 space-x-4 mt-3 grid product-box-wrap text-right items-center w-full">
+      <div className="pr-4 space-x-4 mt-2 grid product-box-wrap text-right items-center w-full">
         <label htmlFor={name} className="uppercase text-sm font-bold mb-2">
           {label}
         </label>
@@ -130,6 +137,7 @@ const ProductInputBox = (props) => {
           onChange={onChangeHandler}
           className="w-full"
           fluid
+          size="small"
           name={name}
           selection
           options={opt}
@@ -144,10 +152,11 @@ const ProductInputBox = (props) => {
     let opt = []
     if (typeof options[0] !== 'string')
       options.forEach((item) => {
+        console.log(item)
         var result = {}
         result['key'] = item.name.toLowerCase()
         result['text'] = item.name
-        result['value'] = item.name
+        result['value'] = item._id
         opt.push(result)
       })
     else
@@ -159,14 +168,15 @@ const ProductInputBox = (props) => {
         opt.push(result)
       })
     return (
-      <div className="pr-4 pl-1 space-x-4 mt-3 grid product-box-wrap text-right items-center w-full">
+      <div className="pr-4  space-x-4 mt-2 grid product-box-wrap text-right items-center w-full">
         <label htmlFor={name} className="uppercase text-sm font-bold mb-2">
           {label}
         </label>
         <Dropdown
           onChange={onChangeHandler}
-          className="w-full"
+          className=" w-full"
           fluid
+          size="mini"
           name={name}
           multiple
           selection
@@ -187,21 +197,16 @@ const ProductInputBox = (props) => {
       return dropDownRender()
     case 'textarea':
       return (
-        <div className="space-x-4 mt-3 grid product-box-wrap text-right items-center">
+        <div className="space-x-4 mt-2 grid product-box-wrap text-right items-center">
           <label htmlFor={name} className="uppercase text-sm font-bold mb-2">
             {label}
           </label>
-          <textarea
+          <TextArea
             name={name}
             {...register(name, validator)}
             type={type ? type : 'text'}
             required
             placeholder={`Enter your ${name}...`}
-            className={`mb-1 border px-5 py-3 bg-gray-100 text-base ${
-              errors[name] || err
-                ? 'border-red-500 bg-red-200'
-                : 'border-gray-400'
-            }`}
           />
           {errors[name] && (
             <p className="text-sm text-red-500">{errorMessage}</p>
@@ -210,21 +215,16 @@ const ProductInputBox = (props) => {
       )
     default:
       return (
-        <div className="space-x-4 mt-3 grid product-box-wrap text-right items-center">
+        <div className="space-x-4 mt-2 grid product-box-wrap text-right items-center">
           <label htmlFor={name} className="uppercase text-sm font-bold mb-2">
             {label}
           </label>
-          <input
+          <Input
             name={name}
             {...register(name, validator)}
             type={type ? type : 'text'}
             required
             placeholder={`Enter your ${name}...`}
-            className={`mb-1 border px-5 py-3 bg-gray-100 text-base ${
-              errors[name] || err
-                ? 'border-red-500 bg-red-200'
-                : 'border-gray-400'
-            }`}
           />
           {errors[name] && (
             <p className="text-sm text-red-500">{errorMessage}</p>

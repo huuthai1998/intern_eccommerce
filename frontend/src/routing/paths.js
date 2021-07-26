@@ -12,6 +12,18 @@ const FORGOT_PASSWORD = '/forgot-password'
 
 const ADD_PRODUCT = '/add-product'
 
+const SELLER_PRODUCTS = '/seller-products'
+
+const ADD_CATEGORY = '/add-category'
+
+const SELLER_CATEGORY = '/seller-category'
+
+const BROWSE = '/browse/:category'
+
+const PRODUCT = '/product/:id'
+
+const EDIT_PRODUCT = '/edit-product/:id'
+
 export default {
   LOGIN,
   REGISTER,
@@ -20,4 +32,10 @@ export default {
   FORGOT_PASSWORD,
   SELLER_LOGIN,
   ADD_PRODUCT,
+  SELLER_PRODUCTS,
+  ADD_CATEGORY,
+  SELLER_CATEGORY,
+  BROWSE,
+  PRODUCT,
+  EDIT_PRODUCT,
 }

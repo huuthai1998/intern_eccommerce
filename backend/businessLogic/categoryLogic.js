@@ -2,18 +2,30 @@ const {
   getAllCategoriesDb,
   addCategoryDb,
   findCategoryDb,
+  deleteCategoryDb,
+  getParentsCategoriesDb,
+  getSubCategoriesDb,
 } = require("../dbActions/categorydbActions");
 
-const addCategoryHandler = async (name, parent, subCategories) => {
+const addCategoryHandler = async (name, parents, subCategories) => {
   try {
-    if (parent === undefined) {
-      const category = await addCategoryDb(name, subCategories);
+    console.log(parents, name);
+    subCategories = subCategories ? subCategories : [];
+
+    if (parents === undefined) {
+      const category = await addCategoryDb(name, null);
+      subCategories.forEach(async (e) => {
+        const addedSub = await addCategoryDb(e, category, []);
+      });
+      category.save();
+
       return category;
     } else {
-      const parentCategory = await findCategoryDb(parent);
-      parentCategory.subCategories = [...parentCategory.subCategories, name];
-      parentCategory.save();
-      return parentCategory;
+      const parentsCategory = await findCategoryDb(parents);
+      console.log("parent: ", parentsCategory);
+      const category = await addCategoryDb(name, parentsCategory);
+      console.log("added: ", category);
+      return category;
     }
   } catch (err) {
     console.log(err);
@@ -31,12 +43,40 @@ const getCategories = async () => {
   }
 };
 
-const te = async (name, parent) => {
+const getParentsCategories = async () => {
   try {
+    const categories = await getParentsCategoriesDb();
+    return categories;
   } catch (err) {
     console.log(err);
     throw err;
   }
 };
 
-module.exports = { addCategoryHandler, getCategories };
+const getSubCategories = async () => {
+  try {
+    const categories = await getSubCategoriesDb();
+    return categories;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+const deleteCategoryHandler = async (_id) => {
+  try {
+    const Category = await deleteCategoryDb(_id);
+    return Category;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+module.exports = {
+  addCategoryHandler,
+  getCategories,
+  deleteCategoryHandler,
+  getParentsCategories,
+  getSubCategories,
+};

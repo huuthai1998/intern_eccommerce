@@ -7,7 +7,7 @@ import * as firebase from 'firebase'
 import { Link, useHistory } from 'react-router-dom'
 import { Dimmer, Loader, Segment } from 'semantic-ui-react'
 
-const AddProduct = () => {
+const EditProduct = () => {
   const { user } = useSelector((i) => i)
   const [category, setCategory] = useState([])
   const [loading, setLoading] = useState(false)
@@ -160,4 +160,4 @@ const AddProduct = () => {
     )
 }
 
-export default AddProduct
+export default EditProduct

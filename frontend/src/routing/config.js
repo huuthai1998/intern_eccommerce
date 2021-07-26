@@ -5,7 +5,12 @@ import AddProduct from 'pages/AddProduct/AddProduct'
 import Home from 'pages/Home'
 import ResetPassword from 'pages/ResetPassword'
 import SellerLogin from 'pages/SellerLogin/SellerLogin'
+import AddCategory from 'pages/SellerCategories/AddCategory'
+import SellerProducts from 'pages/SellerProducts/SellerProducts'
 import routePaths from 'routing/paths'
+import SellerCategories from 'pages/SellerCategories/SellerCategories'
+import Browse from 'pages/Browse/Browse'
+import Product from 'pages/Product/Product'
 
 const config = [
   { path: routePaths.HOME, exact: true, component: Home },
@@ -32,8 +37,42 @@ const config = [
   {
     path: routePaths.ADD_PRODUCT,
     component: AddProduct,
-    // authOny: true,
-    // adminOnly: true,
+    authOny: true,
+    adminOnly: true,
+    name: 'Add product',
+    redirect: routePaths.HOME,
+  },
+  {
+    path: routePaths.SELLER_PRODUCTS,
+    component: SellerProducts,
+    authOny: true,
+    adminOnly: true,
+    name: 'Products',
+    redirect: routePaths.SELLER_LOGIN,
+  },
+  {
+    path: routePaths.ADD_CATEGORY,
+    component: AddCategory,
+    authOny: true,
+    adminOnly: true,
+    name: 'Categories',
+    redirect: routePaths.SELLER_LOGIN,
+  },
+  {
+    path: routePaths.SELLER_CATEGORY,
+    component: SellerCategories,
+    authOny: true,
+    adminOnly: true,
+    name: 'Categories',
+    redirect: routePaths.SELLER_LOGIN,
+  },
+  {
+    path: routePaths.BROWSE,
+    component: Browse,
+  },
+  {
+    path: routePaths.PRODUCT,
+    component: Product,
   },
 ]
 
