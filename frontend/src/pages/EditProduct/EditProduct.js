@@ -4,34 +4,61 @@ import axios from 'axios'
 import { useSelector } from 'react-redux'
 import ProductInputBox from 'component/ProductInputBox/ProductInputBox'
 import * as firebase from 'firebase'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useHistory, useParams } from 'react-router-dom'
 import { Dimmer, Loader, Segment } from 'semantic-ui-react'
 
 const EditProduct = () => {
+  const { id } = useParams()
   const { user } = useSelector((i) => i)
   const [category, setCategory] = useState([])
   const [loading, setLoading] = useState(false)
+  const [product, setProduct] = useState({})
+
   const history = useHistory()
 
-  const storageRef = firebase.storage().ref()
   const fetchData = async () => {
+    try {
+      setLoading(true)
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_BACKEND_LINK}/product/get/${id}`
+      )
+      let temp = data.categories.map((e) => {
+        return e.name
+      })
+      setProduct({ ...data, categories: temp })
+      setLoading(false)
+    } catch (err) {
+      console.log(err.response.data)
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+    return () => {}
+  }, [])
+
+  const storageRef = firebase.storage().ref()
+  const fetchCategory = async () => {
     const { data } = await axios.get(
       `${process.env.REACT_APP_BACKEND_LINK}/category/getSub`
     )
     setCategory(data)
   }
+
+  let formHook = useForm()
+
   useEffect(() => {
     fetchData()
+    fetchCategory()
     return () => {
       setCategory([])
     }
   }, [])
-  const formHook = useForm()
 
   // Submit the form
   const submitHandler = async (product) => {
     console.log(product)
-    setLoading(true)
+    // setLoading(true)
     var tempUrl = []
     try {
       if (product.photos) {
@@ -46,9 +73,10 @@ const EditProduct = () => {
         }
         product.photos = tempUrl
       }
+      product['id'] = id
       console.log(product)
-      const { data } = await axios.post(
-        `${process.env.REACT_APP_BACKEND_LINK}/product/createProduct`,
+      const { data } = await axios.put(
+        `${process.env.REACT_APP_BACKEND_LINK}/product/editProduct`,
         { product },
         {
           headers: {
@@ -58,7 +86,7 @@ const EditProduct = () => {
       )
       setLoading(false)
       alert('Product has been added!')
-      history.push('/seller-products')
+      // history.push('/seller-products')
     } catch (err) {
       console.log(err)
     }
@@ -76,14 +104,21 @@ const EditProduct = () => {
             name="photos"
             label="photos"
             type="photos"
+            photos={product.photos}
           />
-          <ProductInputBox form={formHook} name="name" label="name" />
+          <ProductInputBox
+            form={formHook}
+            name="name"
+            label="name"
+            defaultValue={product.name}
+          />
           <ProductInputBox
             form={formHook}
             name="categories"
             label="categories"
             type="dropdown"
             options={category}
+            defaultValue={product.categories}
           />
           <ProductInputBox
             form={formHook}
@@ -91,12 +126,14 @@ const EditProduct = () => {
             label="brand"
             type="single-drop"
             options={['Adidas', 'Nike', 'Zara', 'Uniqlo', 'H&M', 'Routine']}
+            defaultValue={product.brand}
           />
           <ProductInputBox
             form={formHook}
             name="price"
             label="price ($)"
             type="number"
+            defaultValue={product.price}
           />
           <ProductInputBox
             form={formHook}
@@ -104,6 +141,7 @@ const EditProduct = () => {
             label="size"
             type="dropdown"
             options={['S', 'M', 'L']}
+            defaultValue={product.size}
           />
           <ProductInputBox
             form={formHook}
@@ -119,18 +157,21 @@ const EditProduct = () => {
               'Green',
               'Red',
             ]}
+            defaultValue={product.colors}
           />
           <ProductInputBox
             form={formHook}
             name="quantity"
             label="quantity"
             type="number"
+            defaultValue={product.quantity}
           />
           <ProductInputBox
             form={formHook}
             name="description"
             label="description"
             type="textarea"
+            defaultValue={product.description}
           />
           <div className="pt-8 flex justify-end space-x-4">
             <Link

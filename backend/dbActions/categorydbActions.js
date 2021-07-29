@@ -1,7 +1,7 @@
 const { categoryModel: Category } = require("../models/category");
 
-const findCategoryDb = (_id) => {
-  return Category.findOne({ _id: _id });
+const findCategoryDb = (name) => {
+  return Category.findOne({ name });
 };
 
 const addCategoryDb = (name, parent) => {

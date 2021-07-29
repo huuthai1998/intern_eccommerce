@@ -1,6 +1,10 @@
-.search-bar:focus-within {
+.searchBar:focus-within {
   box-shadow: 0px 0px 3px 2px cyan;
   transition: box-shadow 250ms ease-in;
+}
+
+.searchBar {
+  width: 150px;
 }
 
 .cart-count {
@@ -22,4 +26,10 @@
 
 .grid-nav {
   grid-template-columns: 1fr 1fr 1fr;
+}
+
+.cart-count {
+  top: 0;
+  right: 0;
+  transform: translate(-50%, -50%);
 }

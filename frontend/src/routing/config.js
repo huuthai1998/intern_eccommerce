@@ -11,6 +11,9 @@ import routePaths from 'routing/paths'
 import SellerCategories from 'pages/SellerCategories/SellerCategories'
 import Browse from 'pages/Browse/Browse'
 import Product from 'pages/Product/Product'
+import EditProduct from 'pages/EditProduct/EditProduct'
+import Cart from 'pages/Cart/Cart'
+import Orders from 'pages/Orders/Orders'
 
 const config = [
   { path: routePaths.HOME, exact: true, component: Home },
@@ -43,11 +46,27 @@ const config = [
     redirect: routePaths.HOME,
   },
   {
+    path: routePaths.EDIT_PRODUCT,
+    component: EditProduct,
+    authOny: true,
+    adminOnly: true,
+    name: 'Edit product',
+    redirect: routePaths.HOME,
+  },
+  {
     path: routePaths.SELLER_PRODUCTS,
     component: SellerProducts,
     authOny: true,
     adminOnly: true,
     name: 'Products',
+    redirect: routePaths.SELLER_LOGIN,
+  },
+  {
+    path: routePaths.ORDERS,
+    component: Orders,
+    authOny: true,
+    adminOnly: true,
+    name: 'Orders',
     redirect: routePaths.SELLER_LOGIN,
   },
   {
@@ -73,6 +92,10 @@ const config = [
   {
     path: routePaths.PRODUCT,
     component: Product,
+  },
+  {
+    path: routePaths.CART,
+    component: Cart,
   },
 ]
 

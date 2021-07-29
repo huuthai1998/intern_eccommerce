@@ -9,6 +9,7 @@ import SellerBar from 'component/SellerBar/SellerBar'
 import SellerNavBar from 'component/SellerNavBar/SellerNavBar'
 import jwt from 'jsonwebtoken'
 import BrowseSidebar from 'component/BrowseSidebar/BrowseSidebar'
+import Footer from 'component/Footer/Footer'
 
 const RoutingSwitch = () => {
   const state = useSelector((i) => i)
@@ -38,10 +39,13 @@ const RoutingSwitch = () => {
                 return <div>LOADING</div>
               } else if (route.unAuthOnly && !state.authenticated) {
                 return <Component {...routeProps} />
-              } else if (route.path === '/product/:id') {
+              } else if (
+                route.path === '/product/:id' ||
+                route.path === '/cart'
+              ) {
                 return (
                   <div className="">
-                    <NavBar /> <Component {...routeProps} />
+                    <NavBar /> <Component {...routeProps} /> <Footer />
                   </div>
                 )
               }
@@ -77,6 +81,7 @@ const RoutingSwitch = () => {
                       <BrowseSidebar />
                       <Component {...routeProps} />
                     </div>
+                    <Footer />
                   </div>
                 )
               } else if (route.redirect) {

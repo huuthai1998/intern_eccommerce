@@ -1,9 +1,43 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { Dimmer, Loader, Segment } from 'semantic-ui-react'
+import {
+  Dimmer,
+  Loader,
+  Segment,
+  Dropdown,
+  Header,
+  Icon,
+} from 'semantic-ui-react'
 import { useDispatch, useSelector } from 'react-redux'
 import './Browse.css'
+
+const sorOptions = [
+  {
+    key: 'popularity',
+    text: 'Popularity',
+    value: 'popularity',
+    content: 'Popularity',
+  },
+  {
+    key: 'Name: A-Z',
+    text: 'Name: A-Z',
+    value: 'nameAsc',
+    content: 'Name: A-Z',
+  },
+  {
+    key: 'Price: lowest to highest',
+    text: 'Price: lowest to highest',
+    value: 'priceAsc',
+    content: 'Price: lowest to highest',
+  },
+  {
+    key: 'Price: highest to lowest',
+    text: 'Price: highest to lowest',
+    value: 'priceDesc',
+    content: 'Price: highest to lowest',
+  },
+]
 
 const productsRender = (products) => {
   return products.map((e, i) => {
@@ -11,7 +45,7 @@ const productsRender = (products) => {
       <Link
         to={`/product/${e._id}`}
         className="flex flex-col w-64 product"
-        key={e._idx}
+        key={i}
       >
         <img src={e.photos[0]} alt="product" className="h-full object-cover	" />
         <h6 className="">{e.name}</h6>
@@ -67,8 +101,8 @@ const Browse = (props) => {
     })
   }
   useEffect(() => {
+    setCurrentPage(0)
     fetchData(filter.skip, filter.limit)
-    console.log('AYYY')
     return () => {}
   }, [category, filter])
 
@@ -81,28 +115,61 @@ const Browse = (props) => {
       data: { skip: 0, limit: i, category },
     })
   }
+
+  const sortOnChangeHandler = (e, { value }) => {
+    dispatch({
+      type: 'ADD_FILTER',
+      data: { sort: value },
+    })
+  }
+
+  const SortByDropDown = () => (
+    <div
+      style={{ backgroundColor: '#b7b7b7' }}
+      className="ui form small border border-gray-400 w-72 p-1 px-3"
+    >
+      <Header as="h4" size="small" className="border border-gray-400">
+        <Header.Content>
+          Sort By:
+          <Dropdown
+            inline
+            onChange={sortOnChangeHandler}
+            options={sorOptions}
+            defaultValue={sorOptions[0].value}
+            className="ml-2"
+          />
+        </Header.Content>
+      </Header>
+    </div>
+  )
+
   return (
     <section className="w-full px-4">
       <h2 className="text-center"> {category}</h2>
-      <span className="span text-right flex justify-end">
-        <button
-          onClick={backHandler}
-          className="font-extrabold"
-          disabled={currentPage === 0}
-        >
-          {' '}
-          {'<'}{' '}
-        </button>{' '}
-        <p className="px-4">{` ${currentPage + 1} / ${totalPage} `}</p>
-        <button
-          onClick={nextHandler}
-          className="font-extrabold"
-          disabled={currentPage === totalPage - 1}
-        >
-          {' '}
-          {'>'}{' '}
-        </button>
-      </span>
+      <div className="flex justify-between">
+        {SortByDropDown()}
+        <span className="span text-right flex justify-end items-center">
+          <button
+            onClick={backHandler}
+            className="font-extrabold items-center text-center"
+            disabled={currentPage === 0}
+          >
+            {' '}
+            {'<'}{' '}
+          </button>{' '}
+          <p className="px-4 items-center text-center">{` ${
+            currentPage + 1
+          } / ${totalPage} `}</p>
+          <button
+            onClick={nextHandler}
+            className="font-extrabold"
+            disabled={currentPage === totalPage - 1}
+          >
+            {' '}
+            {'>'}{' '}
+          </button>
+        </span>
+      </div>
       {loading ? (
         <Segment>
           <Dimmer active>

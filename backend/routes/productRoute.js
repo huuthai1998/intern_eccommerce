@@ -8,12 +8,25 @@ const {
   deleteProductHandler,
   getCategoryPaginationLogic,
   getProductById,
+  updateProductHandler,
 } = require("../businessLogic/productLogic");
 
 router.post("/createProduct", isAdmin, async function (req, res) {
   try {
     const { product } = req.body;
+    console.log(product);
     const Product = await addProductHandler(product);
+    console.log(Product);
+    res.status(200).send(Product);
+  } catch (err) {
+    res.status(401).send({ msg: err.message });
+  }
+});
+
+router.put("/editProduct", isAdmin, async function (req, res) {
+  try {
+    const { product } = req.body;
+    const Product = await updateProductHandler(product);
     console.log(Product);
     res.status(200).send(Product);
   } catch (err) {
@@ -53,10 +66,10 @@ router.get("/getAll", async function (req, res) {
 
 router.post("/getByCategory", async function (req, res) {
   try {
-    let { skip, limit, category, size, available, brand, color } = req.body;
+    let { skip, limit, category, size, available, brand, color, sort, name } =
+      req.body;
     skip = skip ? skip : 0;
     limit = limit ? limit : 2;
-    console.log(skip, limit, category, size, available);
     const Product = await getCategoryPaginationLogic(
       skip,
       limit,
@@ -64,7 +77,9 @@ router.post("/getByCategory", async function (req, res) {
       size,
       available,
       brand,
-      color
+      color,
+      sort,
+      name
     );
     res.status(200).send(Product);
   } catch (err) {

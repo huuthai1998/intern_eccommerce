@@ -14,13 +14,10 @@ const productsRender = (products, deleteHandler) => {
     let date = format(new Date(e.createdAt), 'E, do MMM-yyyy')
 
     const todate = new Date().getTime()
-    console.log(dbDate.getDay(), todate)
 
     if (!(dbDate === todate)) {
-      console.log('Ayy')
       date = format(new Date(e.createdAt), 'E, do MMM-yyyy')
     } else {
-      console.log('ADS')
       date = format(new Date(e.createdAt), 'do MMM-yyyy')
       date = 'Today, ' + date
     }
@@ -32,7 +29,11 @@ const productsRender = (products, deleteHandler) => {
     return (
       <tr className={`${i % 2 !== 0 && 'bg-gray-300'} text-base`} key={e._id}>
         <td className="flex space-x-3 p-1 px-5">
-          <img src={e.photos[0]} alt="product" className="w-8 h-10" />
+          <img
+            src={e.photos[0]}
+            alt="product"
+            className="w-8 h-10 object-cover"
+          />
           <div className="flex flex-col">
             <h6 className="text-base">{e.name}</h6>
             <h6 className="text-sm text-gray-400">{category}</h6>
@@ -81,7 +82,7 @@ const SellerProducts = () => {
     }
   }
   return (
-    <section className="h-full p-8">
+    <section className="min-h-screen h-full p-8">
       <div className="flex justify-between">
         <div className="flex space-x-4 w-64 items-center">
           <label htmlFor="sort" className="uppercase text-gray-400">

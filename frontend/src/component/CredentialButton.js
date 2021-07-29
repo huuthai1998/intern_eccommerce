@@ -4,7 +4,7 @@ const CredentialButton = (props) => {
   const { name } = props
   return (
     <button
-      style={{ 'background-color': '#ffa15f' }}
+      style={{ backgroundColor: '#ffa15f' }}
       className="my-10 p-2 text-white text-center orange"
     >
       {name}

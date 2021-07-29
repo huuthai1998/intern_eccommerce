@@ -4,6 +4,10 @@ const findProductDb = (name) => {
   return Product.findOne({ name });
 };
 
+const findProductByIdDb = (_id) => {
+  return Product.findOne({ _id });
+};
+
 const addProductDb = (product) => {
   return Product.create(product);
 };
@@ -27,9 +31,12 @@ const getCategoryPaginationDb = (
   size,
   available,
   brand,
-  color
+  color,
+  sort,
+  name
 ) => {
   return Product.find({
+    $or: name,
     "categories.name": `${category}`,
     size: size !== undefined ? size : { $ne: null },
     colors: color !== undefined ? color : { $ne: null },
@@ -42,10 +49,11 @@ const getCategoryPaginationDb = (
         : { $eq: ["$quantity", "$sold"] },
   })
     .skip(skip * limit)
-    .limit(limit);
+    .limit(limit)
+    .sort(sort);
 };
 
-const countByCategory = (category, size, available, brand, color) => {
+const countByCategory = (category, size, available, brand, color, name) => {
   console.log({
     "categories.name": `${category}`,
     size: size !== undefined ? size : { $ne: null },
@@ -59,6 +67,8 @@ const countByCategory = (category, size, available, brand, color) => {
         : { $eq: ["$quantity", "$sold"] },
   });
   return Product.countDocuments({
+    $or: name,
+    "categories.name": `${category}`,
     "categories.name": `${category}`,
     size: size !== undefined ? size : { $ne: null },
     colors: color !== undefined ? color : { $ne: null },
@@ -80,4 +90,5 @@ module.exports = {
   getCategoryPaginationDb,
   countByCategory,
   getProductDb,
+  findProductByIdDb,
 };

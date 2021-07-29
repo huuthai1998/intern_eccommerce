@@ -33,7 +33,7 @@ const BrowseSidebar = () => {
   const applyFilter = async (sendData) => {
     dispatch({
       type: 'ADD_FILTER',
-      data: sendData,
+      data: { ...sendData, skip: 0 },
     })
   }
 

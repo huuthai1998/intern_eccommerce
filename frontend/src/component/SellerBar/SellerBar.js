@@ -5,12 +5,12 @@ import SidebarItem from './SidebarItem'
 
 const SellerBar = () => {
   return (
-    <nav className="border-gray-500 border-r bg-gray-300 h-screen w-72 flex flex-col  space-y-4">
+    <nav className="border-gray-500 border-r bg-gray-300 min-h-screen h-full w-72 flex flex-col  space-y-4">
       <Link to="/" className="mb-2 p-8">
         <img src={logo} alt="logo" />
       </Link>
       <SidebarItem name="Overview" icon="fas fa-chart-bar" />
-      <SidebarItem name="Orders" icon="fas fa-shopping-cart" />
+      <SidebarItem name="Orders" icon="fas fa-shopping-cart" link="/orders" />
       <SidebarItem
         name="Categories"
         icon="fas fa-tshirt"

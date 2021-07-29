@@ -1,7 +1,7 @@
 import axios from 'axios'
 import SearchBar from 'component/SearchBar/SearchBar'
 import React, { useEffect, useState } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Dropdown } from 'semantic-ui-react'
 import { format } from 'date-fns'
 import ActionsDropdown from '../SellerProducts/ActionsDropdown'
@@ -72,7 +72,7 @@ const SellerCategories = () => {
         <div className="flex space-x-3">
           <SearchBar />
           <Link
-            style={{ 'background-color': '#ffa15f' }}
+            style={{ backgroundColor: '#ffa15f' }}
             to="/add-category"
             className="text-white items-center flex p-2 px-4"
           >

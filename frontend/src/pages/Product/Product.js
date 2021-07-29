@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { Dropdown } from 'semantic-ui-react'
 import './Product.css'
@@ -10,11 +11,11 @@ const thumbnailRender = (product, thumbnailClickHandler) => {
     return product.photos.map((e) => {
       return (
         <img
-          onClick={thumbnailClickHandler(e)}
           key={e}
+          onClick={thumbnailClickHandler(e)}
           src={e}
           alt="thumbnail of the product"
-          className="cursor-pointer"
+          className="cursor-pointer object-cover w-full thumbnail-img"
         />
       )
     })
@@ -23,13 +24,21 @@ const thumbnailRender = (product, thumbnailClickHandler) => {
 
 const Product = (props) => {
   const { id } = useParams()
+  const dispatch = useDispatch()
   const [loading, setLoading] = useState(false)
   const [product, setProduct] = useState({})
   const [image, setImage] = useState('')
-  const { register, setValue } = useForm()
+  const { register, setValue, handleSubmit } = useForm()
 
   const onChangeHandler = (e, { name, value }) => {
     setValue(name.toLowerCase(), value)
+  }
+
+  const addToCartHandler = (data) => {
+    console.log(data)
+    if (data.size === null || data.size === undefined)
+      alert('Please select a size')
+    else dispatch({ type: 'ADD_CART', data: { ...data, product } })
   }
 
   const colorRender = () => {
@@ -47,6 +56,7 @@ const Product = (props) => {
           onChange={onChangeHandler}
           className="w-16"
           fluid
+          required
           size="small"
           name="color"
           selection
@@ -65,6 +75,7 @@ const Product = (props) => {
         <input
           {...register('size')}
           type="radio"
+          required
           id={size}
           name="size"
           value={size}
@@ -79,7 +90,6 @@ const Product = (props) => {
       const { data } = await axios.get(
         `${process.env.REACT_APP_BACKEND_LINK}/product/get/${id}`
       )
-      console.log(data)
       setProduct(data)
       setLoading(false)
     } catch (err) {
@@ -100,17 +110,19 @@ const Product = (props) => {
     setImage(img)
   }
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen mt-10">
       <section className="flex info-section px-32">
-        <div className="grid thumbnail-grid w-32 space-y-3 mr-4">
+        <div className="grid thumbnail-grid mr-4">
           {thumbnailRender(product, thumbnailClickHandler)}
         </div>
-        <img src={image} alt="product" className="mx-4" />
+        <div className="mx-4 photo-main">
+          <img src={image} alt="product" className="h-full object-cover" />
+        </div>
         <div className="">
           <h3 className="font-bold text-lg">{product.name}</h3>
           <h3 className=" text-lg">${product.price}</h3>
           <h3 className=" text-lg">{`${product.numReviews} review`}</h3>
-          <form className="">
+          <form className="" onSubmit={handleSubmit(addToCartHandler)}>
             <p className="">Size</p>
             <div className="flex">
               {sizeButton('S')}
@@ -125,7 +137,13 @@ const Product = (props) => {
               <label htmlFor="quantity" className="text-sm">
                 Quantity
               </label>
-              <input type="number" className="ml-5 border border-black" />
+              <input
+                {...register('quantity')}
+                type="number"
+                min="1"
+                required
+                className="ml-5 border border-black"
+              />
             </div>
             <button className="mt-3 text-center p-2 text-white bg-blue-600">
               Add to cart

@@ -3,9 +3,10 @@ import { useForm } from 'react-hook-form'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 import ProductInputBox from 'component/ProductInputBox/ProductInputBox'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 const AddCategory = () => {
+  const history = useHistory()
   const { user } = useSelector((i) => i)
   const [category, setCategory] = useState([])
   const [loading, setLoading] = useState(false)
@@ -38,6 +39,7 @@ const AddCategory = () => {
       )
 
       alert('Category has been added!')
+      history.push('/seller-category')
     } catch (err) {
       console.log(err.response.data)
     }

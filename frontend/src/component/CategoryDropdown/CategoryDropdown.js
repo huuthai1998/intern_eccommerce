@@ -19,7 +19,7 @@ const CategoryDropdown = ({
 }) => {
   return (
     <div
-      className={`mx-auto category-dropdown p-4 bg-gray-300 flex space-x-16 shadow-md p-2 absolute ${
+      className={`mx-auto category-dropdown p-4 bg-gray-300 flex space-x-16 shadow-md absolute z-50 ${
         !isDropCategory && 'hidden'
       }`}
       onMouseLeave={mouseLeaveCategoryHandler}

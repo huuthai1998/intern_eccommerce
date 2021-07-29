@@ -30,7 +30,7 @@ const Login = () => {
         user
       )
       Cookies.set('authInfo', JSON.stringify(data.token))
-      dispatch({ type: 'LOGIN_SUCCESS', payload: data })
+      dispatch({ type: 'LOGIN_SUCCESS', data })
       console.log(data)
       history.push('/')
     } catch (err) {

@@ -27,7 +27,7 @@ const Register = () => {
         user
       )
       Cookies.set('authInfo', JSON.stringify(data.token))
-      dispatch({ type: 'REGISTER_SUCCESS', payload: data })
+      dispatch({ type: 'REGISTER_SUCCESS', data })
       console.log(data)
       history.push('/')
     } catch (err) {

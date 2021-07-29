@@ -8,6 +8,7 @@ import Cookies from 'js-cookie'
 import axios from 'axios'
 import CategoryDropdown from 'component/CategoryDropdown/CategoryDropdown'
 import { Input } from 'semantic-ui-react'
+import { useForm } from 'react-hook-form'
 
 const categoriesRender = (
   dropCategories,
@@ -42,8 +43,9 @@ const categoriesRender = (
 }
 
 const NavBar = () => {
-  const { authenticated } = useSelector((i) => i)
+  const { authenticated, cartNumItems } = useSelector((i) => i)
   const dispatch = useDispatch()
+  const formHook = useForm()
   const [category, setCategory] = useState([])
   const [isDrop, setIsDrop] = useState(false)
   const [dropCategories, setDropCategories] = useState([])
@@ -55,6 +57,24 @@ const NavBar = () => {
       })
     )
   }
+
+  const cartRender = (
+    <Link to="/cart" className="ml-5 flex ">
+      <button className="flex cart-wrapper items-baseline">
+        <i className="fa fa-shopping-cart" aria-hidden="true"></i>
+      </button>
+      {cartNumItems > 0 ? (
+        <span
+          className="text-white text-sm relative rounded-full h-4 w-4 flex items-center justify-center z-10 cart-count"
+          style={{ backgroundColor: '#ffa15f' }}
+        >
+          {cartNumItems}
+        </span>
+      ) : (
+        <></>
+      )}
+    </Link>
+  )
 
   const mouseLeaveCategoryHandler = (e) => {
     setDropCategories(
@@ -92,23 +112,32 @@ const NavBar = () => {
     }
   }
 
+  const submitHandler = ({ name }) => {
+    dispatch({ type: 'ADD_FILTER', data: { name, skip: 0 } })
+  }
+
   return (
     <nav className="">
-      <section className="w-screen grid grid-nav py-6 border-b border-gray-400">
-        <div className="flex justify-center">
-          <Input
-            icon="search"
-            iconPosition="right"
+      <section className="w-screen grid grid-nav py-6 border-b border-gray-400 px-40">
+        <form
+          onSubmit={formHook.handleSubmit(submitHandler)}
+          className="relative searchBar"
+        >
+          <input
+            {...formHook.register('name')}
             placeholder="Search"
-            className="border-black border rounded-lg"
+            className="h-10 p-2 py-4 border-black border rounded-lg w-full pr-8 focus:outline-none"
           />
-        </div>
+          <button className="absolute right-5 top-2">
+            <i className="fas fa-search"></i>
+          </button>
+        </form>
         <Link to="/" className="flex justify-center">
           <img src={logo} alt="aware logo" className="" />
         </Link>
         {!authenticated ? (
-          <div className="flex justify-center">
-            <div className="space-x-4">
+          <div className="flex justify-end">
+            <div className="space-x-4 flex items-center">
               <Link to="/register" className="text-base">
                 Register
               </Link>
@@ -118,10 +147,11 @@ const NavBar = () => {
               >
                 Log In
               </Link>
+              {cartRender}
             </div>
           </div>
         ) : (
-          <div className="relative flex justify-center">
+          <div className="relative flex items-center justify-end">
             <UserDropdown isDrop={isDrop} logoutHandler={logoutHandler} />
             <button
               onClick={onClickHandler}
@@ -129,6 +159,7 @@ const NavBar = () => {
             >
               avatar
             </button>
+            {cartRender}
           </div>
         )}
       </section>

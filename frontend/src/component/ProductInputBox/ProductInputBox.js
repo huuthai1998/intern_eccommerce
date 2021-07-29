@@ -1,7 +1,6 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import './ProductInputBox.css'
 import { Button, Dropdown, Input, TextArea } from 'semantic-ui-react'
-import { logIn } from 'actions/authActions'
 import CloseButton from 'component/CloseButton/CloseButton'
 
 const ProductInputBox = (props) => {
@@ -23,13 +22,34 @@ const ProductInputBox = (props) => {
   const photo3 = useRef(null)
   const photo4 = useRef(null)
 
-  let { form, name, label, type, validator, errorMessage, err, options } = props
+  let {
+    form,
+    name,
+    label,
+    type,
+    validator,
+    errorMessage,
+    err,
+    options,
+    defaultValue,
+    photos,
+  } = props
+
+  useEffect(() => {
+    if (photos) {
+      var temp = [...imageSrc]
+      photos.forEach((e, i) => {
+        temp[i] = e
+      })
+      setImageSrc(temp)
+    }
+  }, [])
+
   const {
     register,
     formState: { errors },
   } = form
   validator = validator === undefined ? {} : validator
-
   const onChangeHandler = (e, { name, value }) => {
     form.setValue(name, value)
   }
@@ -121,10 +141,9 @@ const ProductInputBox = (props) => {
         result['text'] = item
         result['value'] = item.toLowerCase()
       } else {
-        console.log(item)
         result['key'] = item.name.toLowerCase()
         result['text'] = item.name
-        result['value'] = item._id
+        result['value'] = item.name
       }
       opt.push(result)
     })
@@ -141,6 +160,7 @@ const ProductInputBox = (props) => {
           name={name}
           selection
           options={opt}
+          defaultValue={defaultValue}
         />
 
         {errors[name] && <p className="text-sm text-red-500">{errorMessage}</p>}
@@ -152,11 +172,10 @@ const ProductInputBox = (props) => {
     let opt = []
     if (typeof options[0] !== 'string')
       options.forEach((item) => {
-        console.log(item)
         var result = {}
         result['key'] = item.name.toLowerCase()
         result['text'] = item.name
-        result['value'] = item._id
+        result['value'] = item.name
         opt.push(result)
       })
     else
@@ -181,6 +200,7 @@ const ProductInputBox = (props) => {
           multiple
           selection
           options={opt}
+          defaultValue={defaultValue}
         />
 
         {errors[name] && <p className="text-sm text-red-500">{errorMessage}</p>}
@@ -207,6 +227,7 @@ const ProductInputBox = (props) => {
             type={type ? type : 'text'}
             required
             placeholder={`Enter your ${name}...`}
+            defaultValue={defaultValue}
           />
           {errors[name] && (
             <p className="text-sm text-red-500">{errorMessage}</p>
@@ -225,6 +246,7 @@ const ProductInputBox = (props) => {
             type={type ? type : 'text'}
             required
             placeholder={`Enter your ${name}...`}
+            defaultValue={defaultValue}
           />
           {errors[name] && (
             <p className="text-sm text-red-500">{errorMessage}</p>

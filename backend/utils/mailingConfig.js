@@ -28,4 +28,18 @@ async function resetPasswordEmail(email, url) {
   console.log("Message sent: %s", info.messageId);
 }
 
-module.exports = { sendVerificationEmail, resetPasswordEmail };
+async function orderConfirmationEmail(email, subTotal, product) {
+  let info = await transporter.sendMail({
+    from: "Nguyen Huu Thai <huuthai1998@gmail.com>",
+    to: email,
+    subject: "AWARE order confirmation",
+    html: `<p>Thank you for shopping with us. You ordered "${product}"</p> <br /> The order total is : $${subTotal}`,
+  });
+  console.log("Message sent: %s", info.messageId);
+}
+
+module.exports = {
+  sendVerificationEmail,
+  resetPasswordEmail,
+  orderConfirmationEmail,
+};
