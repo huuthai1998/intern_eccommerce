@@ -58,7 +58,7 @@ const EditProduct = () => {
   // Submit the form
   const submitHandler = async (product) => {
     console.log(product)
-    // setLoading(true)
+    setLoading(true)
     var tempUrl = []
     try {
       if (product.photos) {
@@ -85,8 +85,8 @@ const EditProduct = () => {
         }
       )
       setLoading(false)
-      alert('Product has been added!')
-      // history.push('/seller-products')
+      alert('Product has been edited!')
+      history.push('/seller-products')
     } catch (err) {
       console.log(err)
     }

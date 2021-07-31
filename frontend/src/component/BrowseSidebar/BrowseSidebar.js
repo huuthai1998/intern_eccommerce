@@ -11,7 +11,7 @@ const categoriesRender = (category) => {
       <Link
         key={e._id}
         to={`/browse/${e.name}`}
-        className="text-gray-400 font-semibold  border-gray-300  focus:text-red-400  hover:text-red-400"
+        className="border-gray-300  focus:text-red-400  hover:text-red-400"
       >
         {e.name}
       </Link>
@@ -43,8 +43,8 @@ const BrowseSidebar = () => {
   }, [])
 
   return (
-    <nav className="p-4 border-r 0 h-screen w-72 flex flex-col space-y-4">
-      <h3 className="font-bold">Category</h3>
+    <nav className="py-8 border-r 0 h-screen w-72 flex flex-col space-y-4">
+      <h3 className="font-bold text-lg">Category</h3>
       <div className="border-b-2 pb-8 border-gray-400 flex flex-col space-y-2">
         {categoriesRender(category)}
       </div>

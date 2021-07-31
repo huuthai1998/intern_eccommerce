@@ -1,3 +1,12 @@
 .product {
-  height: 400px;
+  width: 182.8px;
+  height: 250px;
+}
+
+.product-container {
+  width: 182.8px;
+}
+
+.soldOut-tag {
+  transform: translateX(-10%);
 }

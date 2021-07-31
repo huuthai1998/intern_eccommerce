@@ -5,12 +5,11 @@ const findOrderDb = (_id) => {
 };
 
 const addOrderDb = (order) => {
-  console.log(order);
   return Order.create(order);
 };
 
 const getAllOrdersDb = () => {
-  return Order.find({});
+  return Order.find({}).sort("-createdAt");
 };
 
 const deleteOrderDb = (_id) => {

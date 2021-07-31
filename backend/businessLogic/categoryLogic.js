@@ -63,6 +63,16 @@ const getSubCategories = async () => {
   }
 };
 
+const getCategoryByName = async (name) => {
+  try {
+    const category = await findCategoryDb(name);
+    return category;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
 const deleteCategoryHandler = async (_id) => {
   try {
     const Category = await deleteCategoryDb(_id);
@@ -79,4 +89,5 @@ module.exports = {
   deleteCategoryHandler,
   getParentsCategories,
   getSubCategories,
+  getCategoryByName,
 };

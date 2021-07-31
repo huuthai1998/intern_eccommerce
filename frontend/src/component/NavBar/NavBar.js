@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import logo from '../../assets/logo.svg'
+import ava from '../../assets/ava.png'
 import './NavBar.css'
 import { useDispatch, useSelector } from 'react-redux'
 import UserDropdown from 'component/UserDropdown/UserDropdown'
@@ -27,9 +28,9 @@ const categoriesRender = (
           key={i._id}
           onMouseOver={hoverCategoryHandler(index)}
         >
-          <span className=" cursor-pointer">
+          <span className="text-base cursor-pointer font-semibold">
             {i.name}
-            <i className="ml-2 fas fa-chevron-down"></i>
+            <i className="ml-1 fas fa-chevron-down"></i>
           </span>
           <CategoryDropdown
             isDropCategory={dropCategories[index]}
@@ -118,22 +119,22 @@ const NavBar = () => {
 
   return (
     <nav className="">
-      <section className="w-screen grid grid-nav py-6 border-b border-gray-400 px-40">
+      <section className="w-screen grid grid-nav py-3 border-b border-gray-400 px-40">
         <form
           onSubmit={formHook.handleSubmit(submitHandler)}
-          className="relative searchBar"
+          className="relative searchBar rounded-full"
         >
           <input
             {...formHook.register('name')}
             placeholder="Search"
-            className="h-10 p-2 py-4 border-black border rounded-lg w-full pr-8 focus:outline-none"
+            className="h-9 p-2 py-4 border-black border rounded-full w-full pr-8 focus:outline-none"
           />
           <button className="absolute right-5 top-2">
             <i className="fas fa-search"></i>
           </button>
         </form>
-        <Link to="/" className="flex justify-center">
-          <img src={logo} alt="aware logo" className="" />
+        <Link to="/" className="flex justify-center items-center">
+          <img src={logo} alt="aware logo" className="logoImg" />
         </Link>
         {!authenticated ? (
           <div className="flex justify-end">
@@ -143,7 +144,7 @@ const NavBar = () => {
               </Link>
               <Link
                 to="/login"
-                className="text-base font-bold text-red-400 rounded-full px-8 py-1 border border-red-400"
+                className="text-base font-bold text-red-400 h-9 rounded-full px-8 py-1 border border-red-400"
               >
                 Log In
               </Link>
@@ -157,13 +158,13 @@ const NavBar = () => {
               onClick={onClickHandler}
               className="rounded-full border border-red-400"
             >
-              avatar
+              <img src={ava} alt="Avatar" className="rounded-full w-8 h-8" />
             </button>
             {cartRender}
           </div>
         )}
       </section>
-      <section className="relative border-b border-gray-400 py-4 flex space-x-8 justify-center">
+      <section className="relative border-b border-gray-400 py-2 flex space-x-8 justify-center">
         {categoriesRender(
           dropCategories,
           category,

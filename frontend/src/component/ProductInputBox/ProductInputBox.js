@@ -87,7 +87,7 @@ const ProductInputBox = (props) => {
             <img
               src={imageSrc[idx]}
               alt="previewUpload"
-              className="h-64 w-full"
+              className="h-64 w-full object-cover"
             />
             <CloseButton onClick={removeImage(idx)} />
           </div>

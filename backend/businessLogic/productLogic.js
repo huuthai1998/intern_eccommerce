@@ -113,7 +113,7 @@ const getCategoryPaginationLogic = async (
     let sortObj = "";
     switch (sort) {
       case "popularity":
-        sortObj = "sold";
+        sortObj = "-sold";
         break;
       case "nameAsc":
         sortObj = "name";

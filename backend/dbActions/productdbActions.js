@@ -17,7 +17,7 @@ const deleteProductDb = (_id) => {
 };
 
 const getAllProductsDb = () => {
-  return Product.find({});
+  return Product.find({}).sort("-createdAt");
 };
 
 const getProductDb = (_id) => {

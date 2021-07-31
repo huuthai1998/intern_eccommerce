@@ -8,6 +8,7 @@ const {
   deleteCategoryHandler,
   getParentsCategories,
   getSubCategories,
+  getCategoryByName,
 } = require("../businessLogic/categoryLogic");
 
 router.post("/createCategory", isAdmin, async function (req, res) {
@@ -52,6 +53,17 @@ router.post("/deleteCategory", isAdmin, async function (req, res) {
   try {
     const { _id } = req.body;
     const Category = await deleteCategoryHandler(_id);
+    console.log(Category);
+    res.status(200).send(Category);
+  } catch (err) {
+    res.status(401).send({ msg: err.message });
+  }
+});
+
+router.get("/getCategory/:name", async function (req, res) {
+  try {
+    const { name } = req.params;
+    const Category = await getCategoryByName(name);
     console.log(Category);
     res.status(200).send(Category);
   } catch (err) {

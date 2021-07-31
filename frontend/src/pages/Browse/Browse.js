@@ -44,10 +44,18 @@ const productsRender = (products) => {
     return (
       <Link
         to={`/product/${e._id}`}
-        className="flex flex-col w-64 product"
+        className="mb-4 flex flex-col product-container relative"
         key={i}
       >
-        <img src={e.photos[0]} alt="product" className="h-full object-cover	" />
+        {e.sold >= e.quantity && (
+          <p
+            style={{ backgroundColor: '#808080' }}
+            className="absolute soldOut-tag top-60 p-1 text-white text-sm "
+          >
+            Sold out
+          </p>
+        )}
+        <img src={e.photos[0]} alt="product" className="product object-cover" />
         <h6 className="">{e.name}</h6>
         <p className="cursor-pointer text-gray-400 text-sm">${e.price}</p>
       </Link>
@@ -145,8 +153,7 @@ const Browse = (props) => {
 
   return (
     <section className="w-full px-4">
-      <h2 className="text-center"> {category}</h2>
-      <div className="flex justify-between">
+      <div className="flex justify-between mb-4">
         {SortByDropDown()}
         <span className="span text-right flex justify-end items-center">
           <button
@@ -154,19 +161,17 @@ const Browse = (props) => {
             className="font-extrabold items-center text-center"
             disabled={currentPage === 0}
           >
-            {' '}
-            {'<'}{' '}
-          </button>{' '}
-          <p className="px-4 items-center text-center">{` ${
+            <i className="fas fa-angle-left"></i>
+          </button>
+          <p className="font-bold px-4 items-center text-center">{` ${
             currentPage + 1
-          } / ${totalPage} `}</p>
+          }/${totalPage} `}</p>
           <button
             onClick={nextHandler}
             className="font-extrabold"
             disabled={currentPage === totalPage - 1}
           >
-            {' '}
-            {'>'}{' '}
+            <i className="fas fa-angle-right"></i>
           </button>
         </span>
       </div>
@@ -177,7 +182,7 @@ const Browse = (props) => {
           </Dimmer>
         </Segment>
       ) : (
-        <div className="flex-wrap	flex space-x-4">
+        <div className="flex-wrap	flex justify-between">
           {productsRender(products)}
         </div>
       )}

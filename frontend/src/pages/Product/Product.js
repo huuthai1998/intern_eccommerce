@@ -122,36 +122,38 @@ const Product = (props) => {
           <h3 className="font-bold text-lg">{product.name}</h3>
           <h3 className=" text-lg">${product.price}</h3>
           <h3 className=" text-lg">{`${product.numReviews} review`}</h3>
-          <form className="" onSubmit={handleSubmit(addToCartHandler)}>
-            <p className="">Size</p>
-            <div className="flex">
-              {sizeButton('S')}
-              {sizeButton('M')}
-              {sizeButton('L')}
-            </div>
-            <label htmlFor="colors" className="text-sm">
-              Color
-            </label>
-            {colorRender()}
-            <div className="flex">
-              <label htmlFor="quantity" className="text-sm">
-                Quantity
+          {product.sold < product.quantity ? (
+            <form className="" onSubmit={handleSubmit(addToCartHandler)}>
+              <p className="">Size</p>
+              <div className="flex">
+                {sizeButton('S')}
+                {sizeButton('M')}
+                {sizeButton('L')}
+              </div>
+              <label htmlFor="colors" className="text-sm">
+                Color
               </label>
-              <input
-                {...register('quantity')}
-                type="number"
-                min="1"
-                required
-                className="ml-5 border border-black"
-              />
-            </div>
-            <button className="mt-3 text-center p-2 text-white bg-blue-600">
-              Add to cart
-            </button>
-            <p className="border-t border-gray-600 mt-4">
-              {product.description}
-            </p>
-          </form>
+              {colorRender()}
+              <div className="flex">
+                <label htmlFor="quantity" className="text-sm">
+                  Quantity
+                </label>
+                <input
+                  {...register('quantity')}
+                  type="number"
+                  min="1"
+                  required
+                  className="ml-5 border border-black"
+                />
+              </div>
+              <button className="mt-3 text-center p-2 text-white bg-blue-600">
+                Add to cart
+              </button>
+            </form>
+          ) : (
+            <p className="uppercase text-red-500 font-bold">Out of stock</p>
+          )}
+          <p className="border-t border-gray-600 mt-4">{product.description}</p>
         </div>
       </section>
     </main>

@@ -34,7 +34,7 @@ const createUser = async (user) => {
       const { _doc } = await addUserDb(inputUser);
       inputUser = { ..._doc, token: createToken(_doc) };
       delete inputUser.password;
-      const url = `http://localhost:5000/user/verifyEmail/${inputUser.token}`;
+      const url = `${process.env.BACKEND_URL}/user/verifyEmail/${inputUser.token}`;
       // sendVerificationEmail(user.email, url);
       return inputUser;
     }
@@ -97,7 +97,7 @@ const forgotPassword = async (email) => {
       const token = jwt.sign({ email }, process.env.JWT_SECRET, {
         expiresIn: "1h",
       });
-      const url = `http://localhost:3000/reset/${token}`;
+      const url = `${process.env.FRONTEND_URL}/reset/${token}`;
       resetPasswordEmail(email, url);
     } else throw "Email not found";
   } catch (err) {

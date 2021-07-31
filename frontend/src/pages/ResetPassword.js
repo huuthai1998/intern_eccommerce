@@ -15,7 +15,7 @@ const ResetPassword = () => {
   useEffect(() => {
     //Verify token with the server. If token is invalid, redirect to the main page
     axios
-      .get(`http://localhost:5000/user/verifyToken/${token}`)
+      .get(`${process.env.REACT_APP_BACKEND_LINK}/user/verifyToken/${token}`)
       .then((res) => console.log(res))
       .catch((err) => history.push('/'))
   }, [])
@@ -27,7 +27,7 @@ const ResetPassword = () => {
       alert('Password confirmation does not match')
     else {
       const { data } = await axios.put(
-        `http://localhost:5000/user/resetPassword/${token}`,
+        `${process.env.REACT_APP_BACKEND_LINK}/user/resetPassword/${token}`,
         user
       )
       alert('You have successfully reset your password')

@@ -10,6 +10,7 @@ import SellerNavBar from 'component/SellerNavBar/SellerNavBar'
 import jwt from 'jsonwebtoken'
 import BrowseSidebar from 'component/BrowseSidebar/BrowseSidebar'
 import Footer from 'component/Footer/Footer'
+import TitleHeader from 'component/TitlteHeader'
 
 const RoutingSwitch = () => {
   const state = useSelector((i) => i)
@@ -58,7 +59,7 @@ const RoutingSwitch = () => {
                 return (
                   <div className="flex w-screen bg-gray-300">
                     <SellerBar />
-                    <div className=" max-h-screen flex flex-col w-full">
+                    <div className="max-h-screen flex flex-col w-full">
                       <SellerNavBar name={route.name} />
                       <Component {...routeProps} />
                     </div>
@@ -77,7 +78,8 @@ const RoutingSwitch = () => {
                 return (
                   <div className="">
                     <NavBar />
-                    <div className="flex">
+                    <TitleHeader />
+                    <div className="flex px-40">
                       <BrowseSidebar />
                       <Component {...routeProps} />
                     </div>

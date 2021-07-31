@@ -35,7 +35,9 @@ const productsRender = (products, deleteHandler) => {
             className="w-8 h-10 object-cover"
           />
           <div className="flex flex-col">
-            <h6 className="text-base">{e.name}</h6>
+            <Link to={`/product/${e._id}`} className="text-base">
+              {e.name}
+            </Link>
             <h6 className="text-sm text-gray-400">{category}</h6>
           </div>
         </td>
