@@ -8,6 +8,10 @@ const findProductByIdDb = (_id) => {
   return Product.findOne({ _id });
 };
 
+const getProductByBrandDb = (brand) => {
+  return Product.find({ brand }).limit(4);
+};
+
 const addProductDb = (product) => {
   return Product.create(product);
 };
@@ -91,4 +95,5 @@ module.exports = {
   countByCategory,
   getProductDb,
   findProductByIdDb,
+  getProductByBrandDb,
 };

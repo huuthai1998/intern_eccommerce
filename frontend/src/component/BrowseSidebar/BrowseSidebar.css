@@ -1,0 +1,45 @@
+.highlightColor {
+  color: #ff6900;
+}
+
+.category-name:hover {
+  color: #ff6900;
+}
+
+.category-name {
+  font-family: Montserrat;
+  font-size: 14px;
+  margin: 5px 0px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.57;
+  letter-spacing: -0.1px;
+}
+
+.normal-color {
+  color: #4d4d4d;
+}
+.Line-Copy {
+  width: 20px;
+  height: 1px;
+  margin: 8px 147px 7px 1px;
+  border: solid 0.5px #979797;
+}
+
+.Line {
+  width: 101px;
+  height: 0.1px;
+  border: solid 0.5px #979797;
+}
+
+.filter-header {
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: #202124;
+}

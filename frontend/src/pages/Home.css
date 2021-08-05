@@ -1,0 +1,38 @@
+.mainImg-wrapper {
+  height: 513px;
+}
+
+.header-img {
+  width: 545px;
+  height: 45px;
+  font-family: Domine;
+  font-size: 48px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 0.94;
+  letter-spacing: normal;
+  text-align: right;
+  top: 71px;
+  left: 83px;
+}
+
+.shop-home-now {
+  width: 180px;
+  height: 49px;
+  margin: 301px 0 0 375px;
+  padding: 12px 48px 13px;
+  box-shadow: 0 6px 18px 0 rgba(0, 0, 0, 0.12);
+  background-color: #ffa15f;
+  bottom: 47px;
+  right: 73px;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  text-align: center;
+  color: white;
+}

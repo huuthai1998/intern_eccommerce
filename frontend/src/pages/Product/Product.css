@@ -2,15 +2,37 @@
   height: 500px;
 }
 
+.prodName {
+  font-family: Montserrat;
+  font-size: 24px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  color: #202124;
+}
+
+.prodPrice {
+  font-family: Montserrat;
+  font-size: 24px;
+  font-weight: 300;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.33;
+  letter-spacing: normal;
+  color: #202124;
+}
+
 .photo-main {
-  width: 800px;
+  width: 350px;
 }
 
 .thumbnail-grid {
   grid-template-rows: repeat(4, 1fr);
-  width: 300px;
+  width: 100px;
   height: 500px;
-  grid-row-gap: 5px;
+  grid-row-gap: 10px;
 }
 
 .thumbnail-img {
@@ -18,4 +40,56 @@
   max-height: 100%;
   min-width: 0;
   min-height: 0;
+  width: 80px;
+}
+
+.Line-4 {
+  width: 1px;
+  height: 18px;
+  margin: 0px 9px 0px 11px;
+  border: solid 0.5px #979797;
+}
+
+.Line-2 {
+  height: 0.1px;
+  margin: 26px 0 24.9px 0px;
+  border: solid 0.5px #979797;
+}
+
+.sameBrandPic {
+  margin: 5px 0;
+  width: 100px;
+  max-width: 100%;
+  max-height: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+
+.add-button {
+  width: 429px;
+  height: 50px;
+  margin: 30px 0px 0px 0px;
+  font-weight: bold;
+  padding: 12px 292px 14px 43px;
+  box-shadow: 0 6px 18px 0 rgba(0, 0, 0, 0.12);
+  background-color: #5f6dff;
+}
+
+.quan-button {
+  width: 108px;
+  height: 42px;
+  margin: 0 0 0 21px;
+  padding: 9px 10px 9px 8px;
+  border: solid 1px #d4d3d3;
+}
+
+.Montserrat-Medium {
+  font-family: Montserrat;
+  font-size: 14px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.57;
+  letter-spacing: normal;
+  color: #202124;
 }

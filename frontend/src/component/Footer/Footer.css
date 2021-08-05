@@ -1,3 +1,14 @@
 .lg-links {
   width: 550px;
 }
+
+.line {
+  opacity: 0.12;
+  background-color: #202124;
+  width: 100%;
+  height: 1px;
+}
+
+.footer {
+  box-shadow: 0 -2px 4px 0 rgba(0, 0, 0, 0.08), 0 -1px 4px 0 rgba(0, 0, 0, 0.08);
+}

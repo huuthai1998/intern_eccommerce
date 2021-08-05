@@ -1,12 +1,31 @@
 .product {
-  width: 182.8px;
-  height: 250px;
+  width: 180px;
+  height: 216px;
 }
 
 .product-container {
-  width: 182.8px;
+  width: 180px;
 }
 
 .soldOut-tag {
   transform: translateX(-10%);
+  padding: 2px 3px 2px 4px;
+  background-color: #808080;
+}
+
+.price {
+  font-family: Montserrat;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.83;
+  letter-spacing: normal;
+  color: #4d4d4d;
+}
+
+.products-wrap {
+  display: grid;
+  grid-gap: 35px;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
 }

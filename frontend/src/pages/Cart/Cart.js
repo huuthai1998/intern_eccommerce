@@ -13,18 +13,21 @@ const productsRender = (
 ) => {
   console.log(products)
   return products.map((e, i) => {
-    console.log(e.quantity)
     const color = colorHandler(e.color)
     return (
-      <tr key={i} className="text-base border-t border-gray-400">
-        <td className="flex space-x-3 ">
+      <tr
+        style={{ 'border-top': 'solid 0.5px #979797', 'margin-top': '10px' }}
+        key={i}
+        className=""
+      >
+        <td style={{ 'padding-top': '9.5px' }} className="flex space-x-3 ">
           <img
             src={e.product.photos[0]}
             alt="product"
             className="productThumbnail object-cover"
           />
           <div className="flex flex-col justify-between">
-            <h6 className="text-sm font-bold">{e.product.name}</h6>
+            <h6 className="Montserrat-Medium">{e.product.name}</h6>
             <div className="flex text-xs text-gray-400 space-x-2">
               <button className="" onClick={removeFromCart(e.product._id)}>
                 Remove
@@ -35,32 +38,37 @@ const productsRender = (
         <td className={` ${color}`}>
           <i className="fas fa-circle fa-2x"></i>
         </td>
-        <td className=" font-bold">{e.size}</td>
+        <td className="Montserrat-Medium">{e.size}</td>
         <td className="">
-          <div className="flex border border-gray-400 items-center">
+          <div className="quan-button flex justify-between border border-gray-400 items-center">
             <button
-              className="px-2 font-bold text-lg"
+              className="font-bold text-lg px-2"
               disabled={e.quantity === 1}
               onClick={changeHandler('DECREMENT_ITEM_CART', e.product._id)}
             >
-              {' '}
-              -{' '}
+              -
             </button>
-            <p className="">{e.quantity}</p>
+            <p className="Montserrat-Medium">{e.quantity}</p>
             <button
-              className="px-2 font-bold text-lg"
+              className="font-bold text-lg px-2"
               onClick={changeHandler('INCREMENT_ITEM_CART', e.product._id)}
             >
-              {' '}
-              +{' '}
+              +
             </button>
           </div>
         </td>
-        <td className=" font-bold">{`$${e.product.price * e.quantity}`}</td>
+        <td className="Montserrat-Medium">{`${formatter.format(
+          e.product.price * e.quantity
+        )}`}</td>
       </tr>
     )
   })
 }
+
+var formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+})
 
 const Cart = () => {
   const { user, authenticated, cart, cartNumItems, subTotal } = useSelector(
@@ -80,17 +88,17 @@ const Cart = () => {
 
   const colorHandler = (color) => {
     switch (color) {
-      case 'white':
+      case 'White':
         return 'text-gray-300'
-      case 'red':
-        return 'text-ted-400'
-      case 'green':
+      case 'Red':
+        return 'text-red-400'
+      case 'Green':
         return 'text-green-500'
-      case 'yellow':
+      case 'Yellow':
         return 'text-yellow-400'
-      case 'brown':
-        return 'text-brown-400'
-      case 'blue':
+      case 'Brown':
+        return 'brown'
+      case 'Blue':
         return 'text-blue-400'
       default:
         return 'text-black'
@@ -128,38 +136,75 @@ const Cart = () => {
   }
   if (!loading)
     return (
-      <section className="min-h-screen p-8 px-40 w-full">
-        <h1 className="text-xl">My Bag</h1>
+      <section className="min-h-screen px-40 w-full cart-wrapper">
+        <h1 className="My-Bag">My Bag</h1>
         <div className="flex mt-10 w-full justify-between items-start">
-          <table className="flex-grow">
-            <tr className="text-sm text-left">
-              <th className="text-sm font-bold">Products</th>
-              <th className="text-sm  font-bold">Color</th>
-              <th className="font-bold">Size</th>
-              <th className="font-bold">Quantity</th>
-              <th className="font-bold">Amount</th>
+          <table style={{ width: '800px' }} className="">
+            <colgroup>
+              <col span="1" style={{ width: '30%' }} />
+              <col span="1" style={{ width: '20%' }} />
+              <col span="1" style={{ width: '20%' }} />
+              <col span="1" style={{ width: '30%' }} />
+              <col span="1" style={{ width: '30%' }} />
+            </colgroup>
+            <tr className="text-left">
+              <th
+                style={{ 'font-size': '14px' }}
+                className="text-bold text-left"
+              >
+                Products
+              </th>
+              <th
+                style={{ 'font-size': '14px' }}
+                className="text-bold text-left"
+              >
+                Color
+              </th>
+              <th
+                style={{ 'font-size': '14px' }}
+                className="text-bold text-left"
+              >
+                Size
+              </th>
+              <th
+                style={{ 'font-size': '14px' }}
+                className="text-bold text-left"
+              >
+                Quantity
+              </th>
+              <th
+                style={{ 'font-size': '14px' }}
+                className="text-bold text-left"
+              >
+                Amount
+              </th>
             </tr>
             {productsRender(cart, removeFromCart, colorHandler, changeHandler)}
           </table>
-          <div className="w-72">
-            <p className="font-bold text-sm">Total</p>
-            <div className="bg-gray-300 p-3">
+          <div className="">
+            <p className="text-bold text-left">Total</p>
+            <div className="checkout-box Montserrat-Medium">
               <div className="flex justify-between">
                 <p className="">Shipping & Handling</p>
                 <p className="">Free</p>
               </div>
-              <div className="flex justify-between">
+              <div
+                style={{ 'margin-bottom': '15px' }}
+                className="flex justify-between"
+              >
                 <p className="">Total product:</p>
-                <p className="">{subTotal}</p>
+                <p className="">{formatter.format(subTotal)}</p>
               </div>
-              <div className="flex font-bold justify-between border-t border-gray-400">
-                <p className="">Subtotal</p>
-                <p className="">{subTotal}</p>
+              <div className="flex font-bold justify-between border-sub">
+                <p style={{ 'font-size': '16px' }} className="">
+                  Subtotal
+                </p>
+                <p className="text-bold">{formatter.format(subTotal)}</p>
               </div>
             </div>
             <button
               onClick={checkoutHandler}
-              className="mt-2 p-2 text-white bg-red-500 text-center w-full"
+              className="text-bold mt-2 p-2 text-white checkout-button text-center w-full"
             >
               Check out
             </button>

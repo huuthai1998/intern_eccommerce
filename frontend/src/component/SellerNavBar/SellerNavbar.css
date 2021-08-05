@@ -1,0 +1,19 @@
+.seller-nav-wrapper {
+  margin: 32px 0 0;
+}
+
+.Montserrat-Bold {
+  font-family: Montserrat;
+  font-size: 28px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.29;
+  letter-spacing: normal;
+  color: #202124;
+}
+
+.ava-seller-button {
+  box-shadow: 0 5px 20px 0 rgba(61, 61, 63, 0.2);
+  border: solid 2px #ffffff;
+}

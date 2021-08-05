@@ -26,10 +26,9 @@ const Register = () => {
         `${process.env.REACT_APP_BACKEND_LINK}/user/signUp`,
         user
       )
-      Cookies.set('authInfo', JSON.stringify(data.token))
-      dispatch({ type: 'REGISTER_SUCCESS', data })
-      console.log(data)
-      history.push('/')
+      dispatch({ type: 'REGISTER_SUCCESS' })
+      alert('Register successfully. Please verify your email')
+      history.push('/login')
     } catch (err) {
       dispatch({ type: 'REGISTER_FAIL' })
       console.log(err.response.data)

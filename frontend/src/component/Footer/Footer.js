@@ -15,8 +15,11 @@ const itemsRender = (name) => {
 }
 const Footer = () => {
   return (
-    <footer className="px-40 pt-24 pb-10">
-      <div className="flex justify-between pb-14 border-b border-gray-400">
+    <footer
+      style={{ 'margin-top': '500px', 'padding-top': '52px' }}
+      className="footer relative px-40 pb-10"
+    >
+      <div className="flex justify-between mb-14">
         <Link to="/" className="flex ">
           <img src={logo} alt="aware logo" className="" />
         </Link>
@@ -34,6 +37,7 @@ const Footer = () => {
           <img src={ig} alt="aware logo" className="" />
         </div>
       </div>
+      <div className="line"></div>
       <div className="flex justify-between pt-6">
         <div className="flex space-x-4">
           {itemsRender('Home')}

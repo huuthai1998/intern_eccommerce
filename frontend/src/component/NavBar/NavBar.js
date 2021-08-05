@@ -28,9 +28,9 @@ const categoriesRender = (
           key={i._id}
           onMouseOver={hoverCategoryHandler(index)}
         >
-          <span className="text-base cursor-pointer font-semibold">
+          <span className="cursor-pointer cat-nav">
             {i.name}
-            <i className="ml-1 fas fa-chevron-down"></i>
+            <i className="ml-1 fas fa-chevron-down text-xs"></i>
           </span>
           <CategoryDropdown
             isDropCategory={dropCategories[index]}
@@ -60,13 +60,13 @@ const NavBar = () => {
   }
 
   const cartRender = (
-    <Link to="/cart" className="ml-5 flex ">
+    <Link to="/cart" className="ml-5 flex relative">
       <button className="flex cart-wrapper items-baseline">
         <i className="fa fa-shopping-cart" aria-hidden="true"></i>
       </button>
       {cartNumItems > 0 ? (
         <span
-          className="text-white text-sm relative rounded-full h-4 w-4 flex items-center justify-center z-10 cart-count"
+          className="top-10 text-white text-sm relative rounded-full h-4 w-4 flex items-center justify-center z-10 cart-count"
           style={{ backgroundColor: '#ffa15f' }}
         >
           {cartNumItems}
@@ -118,8 +118,11 @@ const NavBar = () => {
   }
 
   return (
-    <nav className="">
-      <section className="w-screen grid grid-nav py-3 border-b border-gray-400 px-40">
+    <nav className="topNav">
+      <section
+        style={{ height: '70px' }}
+        className="w-screen grid grid-nav px-40 items-center"
+      >
         <form
           onSubmit={formHook.handleSubmit(submitHandler)}
           className="relative searchBar rounded-full"
@@ -127,9 +130,12 @@ const NavBar = () => {
           <input
             {...formHook.register('name')}
             placeholder="Search"
-            className="h-9 p-2 py-4 border-black border rounded-full w-full pr-8 focus:outline-none"
+            className="h-9 p-2 py-4 searchInput w-full pr-8 focus:outline-none"
           />
-          <button className="absolute right-5 top-2">
+          <button
+            style={{ color: '#b7b7b7' }}
+            className="absolute right-5 top-2"
+          >
             <i className="fas fa-search"></i>
           </button>
         </form>
@@ -139,12 +145,17 @@ const NavBar = () => {
         {!authenticated ? (
           <div className="flex justify-end">
             <div className="space-x-4 flex items-center">
-              <Link to="/register" className="text-base">
+              <Link
+                to="/register"
+                className="text-regular"
+                style={{ color: '#4d4d4d' }}
+              >
                 Register
               </Link>
               <Link
                 to="/login"
-                className="text-base font-bold text-red-400 h-9 rounded-full px-8 py-1 border border-red-400"
+                style={{ color: '#ff7e24', 'border-color': '#ff7e24' }}
+                className="text-bold h-9 rounded-full px-8 py-1 border "
               >
                 Log In
               </Link>
@@ -156,15 +167,21 @@ const NavBar = () => {
             <UserDropdown isDrop={isDrop} logoutHandler={logoutHandler} />
             <button
               onClick={onClickHandler}
-              className="rounded-full border border-red-400"
+              style={{ 'border-color': '#ffa15f' }}
+              className="rounded-full border"
             >
-              <img src={ava} alt="Avatar" className="rounded-full w-8 h-8" />
+              <img
+                src={ava}
+                alt="Avatar"
+                className="rounded-full w-8 h-8 object-cover"
+              />
             </button>
             {cartRender}
           </div>
         )}
       </section>
-      <section className="relative border-b border-gray-400 py-2 flex space-x-8 justify-center">
+      <div className="Rectangle-59"></div>
+      <section className="relative py-2 flex justify-center">
         {categoriesRender(
           dropCategories,
           category,

@@ -6,6 +6,7 @@ import ProductInputBox from 'component/ProductInputBox/ProductInputBox'
 import * as firebase from 'firebase'
 import { Link, useHistory } from 'react-router-dom'
 import { Dimmer, Loader, Segment } from 'semantic-ui-react'
+import './AddProduct.css'
 
 const AddProduct = () => {
   const { user } = useSelector((i) => i)
@@ -60,16 +61,17 @@ const AddProduct = () => {
       alert('Product has been added!')
       history.push('/seller-products')
     } catch (err) {
-      console.log(err)
+      console.log(err.response.data)
     }
   }
   if (!loading)
     return (
-      <div className="bg-gray-300 h-full w-full justify-center">
-        <h1 className="pl-8 text-lg pb-2">Products / Add product</h1>
+      <div className="h-full justify-end">
+        <h1 className="">Products / Add product</h1>
         <form
+          style={{ width: '900px' }}
           onSubmit={formHook.handleSubmit(submitHandler)}
-          className="ui form mini rounded-md px-10 flex flex-col text-lg font-normal"
+          className="ui form mini rounded-md flex flex-col text-lg font-normal"
         >
           <ProductInputBox
             form={formHook}

@@ -6,7 +6,11 @@ import './CategoryDropdown.css'
 const categoriesDropDownRender = (categories) => {
   return categories.map((i) => {
     return (
-      <Link to={`/browse/${i.name}`} className="cursor-pointer " key={i._id}>
+      <Link
+        to={`/browse/${i.name}`}
+        className="cursor-pointer cat-text"
+        key={i._id}
+      >
         {i.name}
       </Link>
     )
@@ -19,7 +23,7 @@ const CategoryDropdown = ({
 }) => {
   return (
     <div
-      className={`mx-auto top-4 category-dropdown p-4 bg-gray-300 flex space-x-16 shadow-md absolute z-50 ${
+      className={`mx-auto top-4 category-dropdown flex space-x-16 shadow-md absolute z-50 ${
         !isDropCategory && 'hidden'
       }`}
       onMouseLeave={mouseLeaveCategoryHandler}

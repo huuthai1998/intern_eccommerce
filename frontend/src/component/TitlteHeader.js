@@ -17,9 +17,10 @@ const TitleHeader = (props) => {
   }, [])
 
   return (
-    <div className="text-center py-4 text-base">{`${
-      category.parent && category.parent.name
-    } / ${name}`}</div>
+    <div
+      style={{ margin: '40px 0px' }}
+      className="text-center text-regular"
+    >{`${category.parent && category.parent.name} / ${name}`}</div>
   )
 }
 

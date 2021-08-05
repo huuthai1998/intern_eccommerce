@@ -9,6 +9,7 @@ const {
   getCategoryPaginationLogic,
   getProductById,
   updateProductHandler,
+  getProductByBrand,
 } = require("../businessLogic/productLogic");
 
 router.post("/createProduct", isAdmin, async function (req, res) {
@@ -44,6 +45,16 @@ router.get("/get/:id", async function (req, res) {
   }
 });
 
+router.get("/getByBrand/:brand", async function (req, res) {
+  try {
+    const brand = req.params.brand;
+    const Product = await getProductByBrand(brand);
+    res.status(200).send(Product);
+  } catch (err) {
+    res.status(401).send({ msg: err.message });
+  }
+});
+
 router.post("/deleteProduct", isAdmin, async function (req, res) {
   try {
     const { _id } = req.body;
@@ -69,7 +80,7 @@ router.post("/getByCategory", async function (req, res) {
     let { skip, limit, category, size, available, brand, color, sort, name } =
       req.body;
     skip = skip ? skip : 0;
-    limit = limit ? limit : 2;
+    limit = limit ? limit : 5;
     const Product = await getCategoryPaginationLogic(
       skip,
       limit,

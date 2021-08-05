@@ -2,23 +2,29 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import FilterDropdown from './FilterDropdown'
+import './BrowseSidebar.css'
 
-const categoriesRender = (category) => {
+const categoriesRender = (category, categoryChosen) => {
+  console.log(categoryChosen)
   return category.map((e, i) => {
     return (
       <Link
         key={e._id}
         to={`/browse/${e.name}`}
-        className="border-gray-300  focus:text-red-400  hover:text-red-400"
+        className={`category-name ${
+          categoryChosen === e.name ? 'highlightColor' : 'normal-color'
+        }`}
       >
         {e.name}
       </Link>
     )
   })
 }
+
 const BrowseSidebar = () => {
+  const { category: categoryChosen } = useParams()
   const { filter } = useSelector((i) => i)
   const dispatch = useDispatch()
   const [category, setCategory] = useState([])
@@ -28,6 +34,10 @@ const BrowseSidebar = () => {
       `${process.env.REACT_APP_BACKEND_LINK}/category/getSub`
     )
     setCategory(data)
+  }
+
+  const colorClickHandler = (cor) => (e) => {
+    formHook.setValue('color', cor)
   }
 
   const applyFilter = async (sendData) => {
@@ -43,21 +53,32 @@ const BrowseSidebar = () => {
   }, [])
 
   return (
-    <nav className="py-8 border-r 0 h-screen w-72 flex flex-col space-y-4">
-      <h3 className="font-bold text-lg">Category</h3>
-      <div className="border-b-2 pb-8 border-gray-400 flex flex-col space-y-2">
-        {categoriesRender(category)}
+    <nav
+      style={{ 'margin-right': '16px', width: '200px' }}
+      className="pb-8 h-screen flex flex-col space-y-4"
+    >
+      <h3 className="font-bold text-lg filter-header">Category</h3>
+      <div className="Line-Copy"></div>
+      <div style={{ 'margin-bottom': '30px' }} className="flex flex-col">
+        {categoriesRender(category, categoryChosen)}
       </div>
+      <div className="Line"></div>
       <form
         onSubmit={formHook.handleSubmit(applyFilter)}
         className="flex flex-col"
       >
-        <FilterDropdown form={formHook} name="Size" />
+        <h3
+          style={{ 'margin-top': '30px' }}
+          className="font-bold text-lg pb-6 filter-header"
+        >
+          Filter
+        </h3>
+        <FilterDropdown form={formHook} name="Size" sizeOpt={['S', 'M', 'L']} />
         <FilterDropdown
           form={formHook}
           name="Color"
+          colorClickHandler={colorClickHandler}
           options={[
-            'All',
             'Blue',
             'Brown',
             'White',

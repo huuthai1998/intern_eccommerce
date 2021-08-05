@@ -1,0 +1,85 @@
+.sort-by {
+  font-family: Montserrat;
+  font-size: 12px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: #acacac;
+}
+
+.firstTh {
+  margin: 0 281px 22px 48px;
+}
+
+.first-render-td {
+  padding: 12px 48px;
+}
+
+.prod-seller-thumb {
+  width: 30px;
+  height: 40px;
+}
+
+.prod-name {
+  font-family: Montserrat;
+  font-size: 14px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.43;
+  letter-spacing: normal;
+  color: #3d3d3f;
+}
+
+.cat-text-seller {
+  font-family: Montserrat;
+  font-size: 12px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.83;
+  letter-spacing: normal;
+  color: #acacac;
+}
+
+.seller-table-th {
+  padding: 23px 48px;
+  font-family: Montserrat;
+  font-size: 12px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: #acacac;
+}
+.add-button-seller {
+  border-radius: 2px;
+  background-color: #ffa15f;
+}
+
+.export-button {
+  width: 112px;
+  margin: 0px 0 0px 20px;
+  border-radius: 2px;
+  border: solid 1px #ededed;
+  background-color: #ffffff;
+  color: #ffa15f;
+}
+
+.addProd-text {
+  margin: 0 0 0 8px;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-weight: 600;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.71;
+  letter-spacing: normal;
+}
+
+.lowGray-bg {
+  background-color: #f6f6f6;
+}

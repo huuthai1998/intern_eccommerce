@@ -1,14 +1,21 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import './SellerBar.css'
 
 const SidebarItem = (props) => {
-  const { name, icon, link } = props
+  const { name, icon, link, route } = props
+  console.log(name, route)
   return (
     <Link
       to={link ? link : '/add-product'}
-      className="pl-4 text-gray-600 p-2 font-semibold flex space-x-4 text-lg items-center border-l-4 border-gray-300  focus:text-red-400 focus:border-red-400 hover:text-red-400 hover:border-red-400"
+      style={{
+        height: '48px',
+      }}
+      className={`${
+        name === route ? 'highlightColor' : 'normal-color'
+      } item-text flex items-center border-l-4 seller-mode`}
     >
-      <i className={icon}></i>
+      <i style={{ 'margin-right': '20px' }} className={icon}></i>
       <span className="">{name}</span>
     </Link>
   )

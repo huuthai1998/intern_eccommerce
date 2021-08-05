@@ -42,8 +42,6 @@ const authReducer = (state = initState, action) => {
       return {
         ...state,
         isLoading: false,
-        user: data,
-        authenticated: true,
       }
     case REGISTER_FAIL:
       return { ...state, isLoading: false, error: data }

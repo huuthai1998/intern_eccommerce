@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
+import './SellerProducts.css'
 
 const ActionsDropdown = ({
   name,
@@ -29,7 +30,7 @@ const ActionsDropdown = ({
         {drop && (
           <div className="right-0 space-y-2 z-50 absolute flex flex-col text-left items-start bg-white p-1">
             <button
-              className="ml-1 items-center text-sm"
+              className="prod-name ml-1 items-center text-sm"
               onClick={markComplete(_id)}
             >
               <span className="text-green-400 font-bold text-2xl items-center mr-2">
@@ -53,7 +54,7 @@ const ActionsDropdown = ({
   else
     return (
       <td className="p-1 px-5 relative text-right">
-        <button className="ml-1" onClick={onClickHandler}>
+        <button className="ml-1  prod-name" onClick={onClickHandler}>
           Actions <i className="text-gray-400 fas fa-caret-down"></i>
         </button>
         {drop && (

@@ -2,6 +2,8 @@ import UserDropdown from 'component/UserDropdown/UserDropdown'
 import Cookies from 'js-cookie'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import ava from '../../assets/ava.png'
+import './SellerNavbar.css'
 
 const SellerNavBar = ({ name }) => {
   const { user } = useSelector((i) => i)
@@ -25,14 +27,18 @@ const SellerNavBar = ({ name }) => {
     }
   }
   return (
-    <nav className="px-8 bg-gray-300 w-full items-center flex justify-between space-y-4">
-      <h1 className="font-bold text-3xl"> {name}</h1>
+    <nav className="seller-nav-wrapper w-full items-center flex justify-between">
+      <h1 className="Montserrat-Bold"> {name}</h1>
       <div className="">
         <div className="flex items-center relative">
-          <button className="h-10 w-10 rounded-full border border-red-400">
-            ava
+          <button className="h-10 w-10 rounded-full ava-seller-button flex justify-center items-start">
+            <img src={ava} alt="" className="h-9 w-9 rounded-full" />
           </button>
-          <button onClick={onClickHandler} className="pl-4">
+          <button
+            onClick={onClickHandler}
+            style={{ 'font-size': '14px', 'margin-left': '16px' }}
+            className="Montserrat-Bold"
+          >
             {user.name} <i className="text-gray-400 fas fa-caret-down"></i>
           </button>
           <UserDropdown isDrop={isDrop} logoutHandler={logoutHandler} />

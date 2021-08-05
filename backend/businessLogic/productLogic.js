@@ -8,6 +8,7 @@ const {
   getProductDb,
   findProductDb,
   findProductByIdDb,
+  getProductByBrandDb,
 } = require("../dbActions/ProductdbActions");
 
 const addProductHandler = async (product) => {
@@ -79,6 +80,16 @@ const getProducts = async () => {
 const getProductById = async (id) => {
   try {
     const product = await getProductDb(id);
+    return product;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+const getProductByBrand = async (brand) => {
+  try {
+    const product = await getProductByBrandDb(brand);
     return product;
   } catch (err) {
     console.log(err);
@@ -167,4 +178,5 @@ module.exports = {
   getCategoryPaginationLogic,
   getProductById,
   updateProductHandler,
+  getProductByBrand,
 };

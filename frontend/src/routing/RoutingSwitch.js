@@ -42,7 +42,8 @@ const RoutingSwitch = () => {
                 return <Component {...routeProps} />
               } else if (
                 route.path === '/product/:id' ||
-                route.path === '/cart'
+                route.path === '/cart' ||
+                route.path === '/'
               ) {
                 return (
                   <div className="">
@@ -57,9 +58,16 @@ const RoutingSwitch = () => {
                 state.user.isAdmin
               ) {
                 return (
-                  <div className="flex w-screen bg-gray-300">
-                    <SellerBar />
-                    <div className="max-h-screen flex flex-col w-full">
+                  <div className="flex w-screen">
+                    <SellerBar name={route.name} />
+                    <div
+                      style={{
+                        'padding-left': '20px',
+                        'padding-right': '30px',
+                        'background-color': '#f6f6f6',
+                      }}
+                      className="max-h-screen flex flex-col w-full"
+                    >
                       <SellerNavBar name={route.name} />
                       <Component {...routeProps} />
                     </div>

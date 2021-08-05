@@ -1,0 +1,22 @@
+.borderLight {
+  border-color: #cccccc;
+}
+
+.orange {
+  background-color: #ffa15f;
+}
+
+.orangeHover:hover {
+  background-color: #ffa15f;
+}
+
+.orangeHover {
+  width: 40px;
+  height: 40px;
+  margin: 0px 16px 0 0;
+  padding: 9px;
+}
+
+.dashed {
+  padding-top: 14.9px;
+}

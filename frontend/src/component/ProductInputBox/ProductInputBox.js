@@ -81,7 +81,7 @@ const ProductInputBox = (props) => {
 
   const photoCard = (ref, idx) => {
     return (
-      <div className="bg-gray-100 h-64 relative">
+      <div className="photo-box relative">
         {imageSrc[idx] !== undefined ? (
           <div className="flex justify-center relative">
             <img
@@ -117,7 +117,7 @@ const ProductInputBox = (props) => {
 
   const photosHandler = () => {
     return (
-      <div className="space-x-4 mt-2 grid product-box-wrap text-right items-center">
+      <div className=" mt-2 grid product-box-wrap text-right items-center">
         <label htmlFor={name} className="uppercase text-sm font-bold mb-2">
           {label}
         </label>
@@ -148,7 +148,7 @@ const ProductInputBox = (props) => {
       opt.push(result)
     })
     return (
-      <div className="pr-4 space-x-4 mt-2 grid product-box-wrap text-right items-center w-full">
+      <div className="  mt-2 grid product-box-wrap text-right items-center w-full">
         <label htmlFor={name} className="uppercase text-sm font-bold mb-2">
           {label}
         </label>
@@ -187,7 +187,7 @@ const ProductInputBox = (props) => {
         opt.push(result)
       })
     return (
-      <div className="pr-4  space-x-4 mt-2 grid product-box-wrap text-right items-center w-full">
+      <div className="   mt-2 grid product-box-wrap text-right items-center w-full">
         <label htmlFor={name} className="uppercase text-sm font-bold mb-2">
           {label}
         </label>
@@ -217,7 +217,7 @@ const ProductInputBox = (props) => {
       return dropDownRender()
     case 'textarea':
       return (
-        <div className="space-x-4 mt-2 grid product-box-wrap text-right items-center">
+        <div className=" mt-2 grid product-box-wrap text-right items-center">
           <label htmlFor={name} className="uppercase text-sm font-bold mb-2">
             {label}
           </label>
@@ -236,7 +236,7 @@ const ProductInputBox = (props) => {
       )
     default:
       return (
-        <div className="space-x-4 mt-2 grid product-box-wrap text-right items-center">
+        <div className=" mt-2 grid product-box-wrap text-right items-center">
           <label htmlFor={name} className="uppercase text-sm font-bold mb-2">
             {label}
           </label>

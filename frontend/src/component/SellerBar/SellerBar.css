@@ -1,0 +1,35 @@
+.seller-bar {
+  box-shadow: 1px 0 0 0 #ededed;
+  background-color: #f6f6f6;
+  width: 230px;
+  border-right: solid 0.5px #ededed;
+}
+
+.item-text {
+  font-family: Montserrat;
+  font-size: 14px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.43;
+  letter-spacing: normal;
+  color: #3d3d3f;
+  padding: 12px 91px 12px 20px;
+}
+
+.logo-seller-wrapper {
+  width: 132px;
+  height: 27.5px;
+  margin: 32px 44px 44.5px;
+  object-fit: contain;
+}
+
+.highlightColor {
+  color: #ffa15f;
+  border-color: #ffa15f;
+}
+
+.seller-mode:hover {
+  color: #ffa15f;
+  border-color: #ffa15f;
+}

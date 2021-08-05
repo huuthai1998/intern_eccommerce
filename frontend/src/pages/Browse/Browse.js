@@ -39,25 +39,27 @@ const sorOptions = [
   },
 ]
 
+var formatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+})
+
 const productsRender = (products) => {
   return products.map((e, i) => {
     return (
       <Link
         to={`/product/${e._id}`}
-        className="mb-4 flex flex-col product-container relative"
+        className="flex flex-col product-container relative"
         key={i}
       >
         {e.sold >= e.quantity && (
-          <p
-            style={{ backgroundColor: '#808080' }}
-            className="absolute soldOut-tag top-60 p-1 text-white text-sm "
-          >
+          <p className="absolute soldOut-tag top-52 p-1 text-bold-white">
             Sold out
           </p>
         )}
         <img src={e.photos[0]} alt="product" className="product object-cover" />
-        <h6 className="">{e.name}</h6>
-        <p className="cursor-pointer text-gray-400 text-sm">${e.price}</p>
+        <h6 className="text-medium">{e.name}</h6>
+        <p className="cursor-pointer price">{formatter.format(e.price)}</p>
       </Link>
     )
   })
@@ -67,7 +69,7 @@ const Browse = (props) => {
   const { category } = useParams()
   const [products, setProducts] = useState([])
   const [total, setTotal] = useState(0)
-  const [limitPage, setLimitPage] = useState(2)
+  const [limitPage, setLimitPage] = useState(5)
   const [currentPage, setCurrentPage] = useState(0)
   const [totalPage, setTotalPage] = useState(0)
   const [loading, setLoading] = useState(false)
@@ -76,7 +78,7 @@ const Browse = (props) => {
   const dispatch = useDispatch()
 
   const fetchData = async (current, limit) => {
-    limit = limit ? limit : 2
+    limit = limit ? limit : 5
     setLoading(true)
     console.log(filter)
     const { data } = await axios.post(
@@ -109,7 +111,6 @@ const Browse = (props) => {
     })
   }
   useEffect(() => {
-    setCurrentPage(0)
     fetchData(filter.skip, filter.limit)
     return () => {}
   }, [category, filter])
@@ -133,26 +134,21 @@ const Browse = (props) => {
 
   const SortByDropDown = () => (
     <div
-      style={{ backgroundColor: '#b7b7b7' }}
-      className="ui form small border border-gray-400 w-72 p-1 px-3"
+      style={{ backgroundColor: '#b7b7b7', width: '180px' }}
+      className="ui form tiny border border-gray-400 p-1"
     >
-      <Header as="h4" size="small" className="border border-gray-400">
-        <Header.Content>
-          Sort By:
-          <Dropdown
-            inline
-            onChange={sortOnChangeHandler}
-            options={sorOptions}
-            defaultValue={sorOptions[0].value}
-            className="ml-2"
-          />
-        </Header.Content>
-      </Header>
+      <Dropdown
+        inline
+        onChange={sortOnChangeHandler}
+        options={sorOptions}
+        defaultValue={sorOptions[0].value}
+        className=""
+      />
     </div>
   )
 
   return (
-    <section className="w-full px-4">
+    <section className="w-full">
       <div className="flex justify-between mb-4">
         {SortByDropDown()}
         <span className="span text-right flex justify-end items-center">
@@ -163,7 +159,7 @@ const Browse = (props) => {
           >
             <i className="fas fa-angle-left"></i>
           </button>
-          <p className="font-bold px-4 items-center text-center">{` ${
+          <p className="text-medium px-4 items-center text-center">{` ${
             currentPage + 1
           }/${totalPage} `}</p>
           <button
@@ -182,9 +178,7 @@ const Browse = (props) => {
           </Dimmer>
         </Segment>
       ) : (
-        <div className="flex-wrap	flex justify-between">
-          {productsRender(products)}
-        </div>
+        <div className="products-wrap">{productsRender(products)}</div>
       )}
       <div className="mt-10 flex space-x-4">
         <p className="">Products per page:</p>

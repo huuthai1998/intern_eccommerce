@@ -35,7 +35,7 @@ const createUser = async (user) => {
       inputUser = { ..._doc, token: createToken(_doc) };
       delete inputUser.password;
       const url = `${process.env.BACKEND_URL}/user/verifyEmail/${inputUser.token}`;
-      // sendVerificationEmail(user.email, url);
+      sendVerificationEmail(user.email, url);
       return inputUser;
     }
   } catch (err) {
